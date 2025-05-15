@@ -1,6 +1,6 @@
-import CustomerSection from "@/components/CustomerSection";
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
+import CustomerSection from "@/components/layout/CustomerSection";
+import Footer from "@/components/layout/Footer";
+import Header from "@/components/layout/Header";
 import { Outlet } from "react-router-dom";
 
 export default function ClientLayout() {
