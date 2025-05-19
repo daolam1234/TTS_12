@@ -1,20 +1,23 @@
 import { Button } from "@/components/ui/button"
 import { useRoutes } from "react-router-dom"
+import ClientLayout from "./layouts/ClientLayout"
+import Layoutadmin from "./layouts/AdminLayout"
 
 function App() {
 
   const router = useRoutes([
     {
       path:'/',
-      element: <div>home</div>
-    }
+      element: <ClientLayout/>
+    },
+    {
+      path:'/admin',
+      element: <Layoutadmin/>
+    },
   ])
   
   return (
-    <div className="flex flex-col items-center justify-center min-h-svh">
-      <Button>Click me</Button>
-      {router}
-    </div>
+    <div>{router}</div>
   )
 }
 
