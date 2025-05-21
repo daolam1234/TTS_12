@@ -1,28 +1,24 @@
-
-import React from 'react';
-import { Layout } from 'antd';
-import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
+import { Layout, Typography } from "antd";
+import { MenuOutlined } from "@ant-design/icons";
 
 const { Header } = Layout;
+const { Title } = Typography;
 
-const HeaderComponent = ({ collapsed, toggle }: { collapsed: boolean; toggle: () => void }) => {
+interface HeaderProps {
+  onToggleMenu: () => void;
+  isMobile?: boolean;
+}
+
+export default function HeaderComponent({ onToggleMenu, isMobile }: HeaderProps) {
   return (
-    <Header
-      style={{
-        padding: 0,
-        background: '#fff',
-        display: 'flex',
-        alignItems: 'center',
-        paddingLeft: 16,
-      }}
-    >
-      {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-        className: 'trigger',
-        onClick: toggle,
-      })}
-      <h2 style={{ marginLeft: 16 }}>Quản lý hệ thống</h2>
+    <Header className="bg-white shadow-sm px-6 flex items-center justify-between">
+      <Title level={3} className="m-0">Dashboard</Title>
+      {isMobile && (
+        <MenuOutlined
+          onClick={onToggleMenu}
+          className="text-xl cursor-pointer"
+        />
+      )}
     </Header>
   );
-};
-
-export default HeaderComponent;
+}

@@ -1,38 +1,43 @@
-// src/components/SidebarComponent.js
-import React from 'react';
-import { Layout, Menu } from 'antd';
+import { Menu } from "antd";
 import {
   HomeOutlined,
-  ShoppingCartOutlined,
+  AppstoreOutlined,
+  PictureOutlined,
+  BarsOutlined,
+  CreditCardOutlined,
+  GlobalOutlined,
   UserOutlined,
-} from '@ant-design/icons';
+  LoginOutlined,
+} from "@ant-design/icons";
 
-const { Sider } = Layout;
-
-const SidebarComponent = ({ collapsed = false }: { collapsed?: boolean }) => {
+export default function Sidebar() {
   return (
-    <Sider trigger={null} collapsible collapsed={collapsed}>
-      <div
-        className="logo"
-        style={{
-          height: 64,
-          margin: 16,
-       
-        }}
-      ><a href="" className="text-xl text-white font-bold">12 SNEAKER</a></div>
-      <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-        <Menu.Item key="1" icon={<HomeOutlined />}>
-          Trang chủ
-        </Menu.Item>
-        <Menu.Item key="2" icon={<ShoppingCartOutlined />}>
-          Sản phẩm
-        </Menu.Item>
-        <Menu.Item key="3" icon={<UserOutlined />}>
-          Tài khoản
-        </Menu.Item>
-      </Menu>
-    </Sider>
+    <Menu mode="vertical" defaultSelectedKeys={["home"]}>
+      <Menu.Item key="home" icon={<HomeOutlined />}>
+        Home
+      </Menu.Item>
+      <Menu.Item key="products" icon={<AppstoreOutlined />}>
+        Quản lý sản phẩm
+      </Menu.Item>
+      <Menu.Item key="banners" icon={<PictureOutlined />}>
+        Quản lý banner
+      </Menu.Item>
+      <Menu.Item key="categories" icon={<BarsOutlined />}>
+        Quản lý danh mục
+      </Menu.Item>
+      <Menu.Item key="billing" icon={<CreditCardOutlined />}>
+        Billing
+      </Menu.Item>
+      <Menu.Item key="rtl" icon={<GlobalOutlined />}>
+        RTL
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item key="profile" icon={<UserOutlined />}>
+        Profile
+      </Menu.Item>
+      <Menu.Item key="signin" icon={<LoginOutlined />}>
+        Sign In
+      </Menu.Item>
+    </Menu>
   );
-};
-
-export default SidebarComponent;
+}
