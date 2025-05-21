@@ -1,24 +1,46 @@
-import { Button } from "@/components/ui/button"
-import { useRoutes } from "react-router-dom"
-import ClientLayout from "./layouts/ClientLayout"
-import Layoutadmin from "./layouts/AdminLayout"
+import { useRoutes } from "react-router-dom";
+
+
+import Login from "./pages/auth/login";
+import Homeadmin from "./pages/home";
 
 function App() {
-
   const router = useRoutes([
     {
-      path:'/',
-      element: <ClientLayout/>
+      path: "/",
+      children: [
+
+        { path: "auth/login", element: <Login /> },
+
+        // Các route cần phân quyền
+        {
+          path: "admin/dashboard",
+          element: (
+           
+              <Homeadmin />
+       
+          ),
+        },
+       
+      ],
     },
     {
-      path:'/admin',
-      element: <Layoutadmin/>
+      path: "/admin",
+      children: [
+        {
+          path: "dashboard",
+          element: (
+           
+              <Homeadmin />
+       
+          ),
+        },
+       
+      ],
     },
-  ])
-  
-  return (
-    <div>{router}</div>
-  )
+  ]);
+
+  return <div>{router}</div>;
 }
 
-export default App
+export default App;
