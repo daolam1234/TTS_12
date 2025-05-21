@@ -96,7 +96,7 @@ export default function Homeadmin() {
             <Col xs={24} lg={8}><DesignTipsCard /></Col>
           </Row>
 
-          <div className="mt-6"><ProductTable /></div>
+          <div className="mt-6 overflow-auto"><ProductTable /></div>
         </Content>
       </Layout>
     </Layout>
