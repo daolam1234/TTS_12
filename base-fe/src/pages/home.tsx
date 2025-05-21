@@ -12,6 +12,8 @@ import ProductTable from "@/components/admin/ProductTable";
 import Sidebar from "@/components/admin/sidebar";
 import { useState, useEffect } from "react";
 import HeaderComponent from "@/components/admin/header";
+import LineChart from "@/components/admin/LineChart";
+
 
 const { Content } = Layout;
 const { useBreakpoint } = Grid;
@@ -88,7 +90,9 @@ export default function Homeadmin() {
           </Row>
 
           <Row gutter={16} className="mt-6">
-            <Col xs={24} lg={16}><SalesOverview /></Col>
+            <Col xs={24} lg={16}>
+                <LineChart/>
+            </Col>
             <Col xs={24} lg={8}><DesignTipsCard /></Col>
           </Row>
 
