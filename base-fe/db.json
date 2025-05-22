@@ -44,5 +44,21 @@
     }
   ],
   "products": [],
-  "orders": []
+  "orders": [],
+  "categories": [
+    {
+      "name": "bánh",
+      "description": "ssswww",
+      "image": "234",
+      "createdAt": "2025-05-22",
+      "id": 1
+    },
+    {
+      "name": "bánh",
+      "description": "ssswww",
+      "image": "https://citylaila.com/back/images/attractions/gallery/01102023191033_63bdb8299a1a9_1673377833_969080.webp",
+      "createdAt": "2025-05-22",
+      "id": 2
+    }
+  ]
 }
