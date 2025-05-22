@@ -1,8 +1,8 @@
 // src/components/LayoutWithSidebar.js
 import React, { useState } from 'react';
 import { Layout } from 'antd';
-import SidebarComponent from '@/components/admin/sidebar';
-import HeaderComponent from '@/components/admin/header';
+import SidebarComponent from '@/components/admin/Dashboard/sidebar';
+import HeaderComponent from '@/components/admin/Dashboard/header';
 
 
 const { Content } = Layout;

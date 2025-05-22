@@ -3,6 +3,15 @@ export interface LoginPayload {
   password: string;
 
 }
+export interface FormValues {
+  lastName: string;
+  firstName: string;
+  dob: string;
+  gender: "male" | "female";
+  email: string;
+  password: string;
+  confirmPassword?: string;
+}
 
 export interface LoginResponse {
   token: string;
