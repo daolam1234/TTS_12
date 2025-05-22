@@ -5,6 +5,9 @@ import Login from "./pages/auth/login";
 import Homeadmin from "./pages/home";
 import Register from "./pages/auth/register";
 import { ToastContainer } from "react-toastify";
+import Category from "./pages/Category/category";
+
+import AddCategoryForm from "./components/admin/Category/Addcategory";
 
 function App() {
   const router = useRoutes([
@@ -23,12 +26,13 @@ function App() {
       children: [
         {
           path: "dashboard",
-          element: (
-           
-              <Homeadmin />
-       
-          ),
+          element:  <Homeadmin />,
         },
+        {
+          path: "categorys",
+          element:  <Category />,
+        },
+       
        
       ],
     },

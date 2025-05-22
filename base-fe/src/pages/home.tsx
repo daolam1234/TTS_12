@@ -1,32 +1,18 @@
-import { Layout, Row, Col, Typography, Drawer, Grid } from "antd";
+// src/pages/admin/Homeadmin.tsx
+import { Row, Col } from "antd";
+import SummaryCard from "@/components/admin/Dashboard/SummaryCard";
+import DesignTipsCard from "@/components/admin/Dashboard/DesignTipsCard";
+import ProductTable from "@/components/admin/Dashboard/ProductTable";
+import LineChart from "@/components/admin/Dashboard/LineChart";
+
+import AdminLayout from "@/layouts/AdminLayout";
 import {
   DollarOutlined,
   UserOutlined,
   TeamOutlined,
   ShoppingCartOutlined,
 } from "@ant-design/icons";
-import SummaryCard from "@/components/admin/Dashboard/SummaryCard";
-import SalesOverview from "@/components/admin/Dashboard/SalesOverview";
-import DesignTipsCard from "@/components/admin/Dashboard/DesignTipsCard";
-import ProductTable from "@/components/admin/Dashboard/ProductTable";
-import Sidebar from "@/components/admin/Dashboard/sidebar";
-import { useState, useEffect } from "react";
-import HeaderComponent from "@/components/admin/Dashboard/header";
-import LineChart from "@/components/admin/Dashboard/LineChart";
-
-
-const { Content } = Layout;
-const { useBreakpoint } = Grid;
-
 export default function Homeadmin() {
-  const screens = useBreakpoint();
-  const isMobile = !screens.md; // md = 768px
-  const [drawerVisible, setDrawerVisible] = useState(false);
-
-  const toggleDrawer = () => {
-    setDrawerVisible(!drawerVisible);
-  };
-
   const summaryCards = [
     {
       title: "TODAY'S MONEY",
@@ -59,46 +45,27 @@ export default function Homeadmin() {
   ];
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
-      {!isMobile ? (
-        <Layout.Sider width={220} className="bg-white shadow-md">
-          <div className="text-center text-xl font-bold my-4">Admin</div>
-          <Sidebar />
-        </Layout.Sider>
-      ) : (
-        <Drawer
-          title="Admin"
-          placement="left"
-          onClose={toggleDrawer}
-          open={drawerVisible}
-          bodyStyle={{ padding: 0 }}
-        >
-          <Sidebar />
-        </Drawer>
-      )}
+    <AdminLayout>
+      <Row gutter={16}>
+        {summaryCards.map((card, index) => (
+          <Col xs={24} sm={12} lg={6} key={index}>
+            <SummaryCard {...card} />
+          </Col>
+        ))}
+      </Row>
 
-      <Layout>
-        <HeaderComponent onToggleMenu={toggleDrawer} isMobile={isMobile} />
+      <Row gutter={16} className="mt-6">
+        <Col xs={24} lg={16}>
+          <LineChart />
+        </Col>
+        <Col xs={24} lg={8}>
+          <DesignTipsCard />
+        </Col>
+      </Row>
 
-        <Content className="p-6 bg-gray-100">
-          <Row gutter={16}>
-            {summaryCards.map((card, index) => (
-              <Col xs={24} sm={12} lg={6} key={index}>
-                <SummaryCard {...card} />
-              </Col>
-            ))}
-          </Row>
-
-          <Row gutter={16} className="mt-6">
-            <Col xs={24} lg={16}>
-                <LineChart/>
-            </Col>
-            <Col xs={24} lg={8}><DesignTipsCard /></Col>
-          </Row>
-
-          <div className="mt-6 overflow-auto"><ProductTable /></div>
-        </Content>
-      </Layout>
-    </Layout>
+      <div className="mt-6 overflow-auto">
+        <ProductTable />
+      </div>
+    </AdminLayout>
   );
 }

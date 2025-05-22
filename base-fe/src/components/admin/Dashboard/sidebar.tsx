@@ -9,34 +9,35 @@ import {
   UserOutlined,
   LoginOutlined,
 } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 export default function Sidebar() {
   return (
     <Menu mode="vertical" defaultSelectedKeys={["home"]}>
       <Menu.Item key="home" icon={<HomeOutlined />}>
-        Home
+        <Link to="/admin/dashboard">Home</Link>
       </Menu.Item>
       <Menu.Item key="products" icon={<AppstoreOutlined />}>
-        Quản lý sản phẩm
+        <Link to="/admin/products">Quản lý sản phẩm</Link>
       </Menu.Item>
       <Menu.Item key="banners" icon={<PictureOutlined />}>
-        Quản lý banner
+        <Link to="/admin/banners">Quản lý banner</Link>
       </Menu.Item>
-      <Menu.Item key="categories" icon={<BarsOutlined />}>
-        Quản lý danh mục
+      <Menu.Item key="categorys" icon={<BarsOutlined />}>
+        <Link to="/admin/categorys">Quản lý danh mục</Link>
       </Menu.Item>
       <Menu.Item key="billing" icon={<CreditCardOutlined />}>
-        Billing
+        <Link to="/admin/billing">Billing</Link>
       </Menu.Item>
       <Menu.Item key="rtl" icon={<GlobalOutlined />}>
-        RTL
+        <Link to="/admin/rtl">RTL</Link>
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item key="profile" icon={<UserOutlined />}>
-        Profile
+        <Link to="/admin/profile">Profile</Link>
       </Menu.Item>
       <Menu.Item key="signin" icon={<LoginOutlined />}>
-        Sign In
+        <Link to="/signin">Sign In</Link>
       </Menu.Item>
     </Menu>
   );
