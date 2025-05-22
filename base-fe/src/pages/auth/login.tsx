@@ -1,34 +1,26 @@
-import { useLogin } from '@/hooks/useLogin';
-import { useNavigate, Link } from 'react-router-dom';
-import { useState } from 'react';
-import { Row, Col, Form, Input, Button, Typography, message } from 'antd';
+import { useForm, Controller } from "react-hook-form";
+import { useNavigate, Link } from "react-router-dom";
+import { Row, Col, Form, Input, Button, Typography, message } from "antd";
+import type { FormValues } from "@/types/auth/auth";
+import { useAuth } from "@/hooks/useAuth";
+import { toast } from "react-toastify";
 
 const { Text } = Typography;
 
 export default function Login() {
-  const navigate = useNavigate();
-  const loginMutation = useLogin();
 
-  const onFinish = async (values: { email: string; password: string }) => {
-    try {
-      const data = await loginMutation.mutateAsync(values);
-      console.log('Đăng nhập thành công:', data);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
+  
+  const loginMutation = useAuth({ resource: "login" });
 
-      // Lưu token và role vào localStorage
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('role', data.role);
-
-      // Điều hướng theo role
-      if (data.role === 'admin') {
-        navigate('/admin/dashboard');
-      } else {
-        navigate('/user/home');
-      }
-    } catch (error) {
-      console.error('Lỗi đăng nhập:', error);
-      message.error('Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.');
-    }
+  const onSubmit = (data: FormValues) => {
+    loginMutation.mutate(data);
   };
+     
 
   return (
     <Row justify="center" style={{ height: "100vh", alignItems: "center" }}>
@@ -36,31 +28,48 @@ export default function Login() {
         <h1 style={{ textAlign: "center", color: "blue", fontSize: "24px", fontWeight: "bold" }}>
           Đăng nhập
         </h1>
-        <Form onFinish={onFinish} layout="vertical">
+
+        <Form layout="vertical" onFinish={handleSubmit(onSubmit)}>
           <Form.Item
-            name="email"
             label="Email"
-            rules={[
-              { required: true, message: "Vui lòng nhập email!" },
-              { type: "email", message: "Email không hợp lệ!" },
-            ]}
+            validateStatus={errors.email ? "error" : ""}
+            help={errors.email?.message}
           >
-            <Input type="email" />
+            <Controller
+              name="email"
+              control={control}
+              rules={{
+                required: "Vui lòng nhập email!",
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: "Email không hợp lệ!",
+                },
+              }}
+              render={({ field }) => <Input {...field} />}
+            />
           </Form.Item>
 
           <Form.Item
-            name="password"
             label="Mật khẩu"
-            rules={[
-              { required: true, message: "Vui lòng nhập mật khẩu!" },
-              { min: 6, message: "Mật khẩu phải có ít nhất 6 ký tự!" },
-            ]}
+            validateStatus={errors.password ? "error" : ""}
+            help={errors.password?.message}
           >
-            <Input.Password />
+            <Controller
+              name="password"
+              control={control}
+              rules={{
+                required: "Vui lòng nhập mật khẩu!",
+                minLength: {
+                  value: 6,
+                  message: "Mật khẩu phải có ít nhất 6 ký tự!",
+                },
+              }}
+              render={({ field }) => <Input.Password {...field} />}
+            />
           </Form.Item>
 
           <Button type="primary" htmlType="submit" block loading={loginMutation.isLoading}>
-            {loginMutation.isLoading ? 'Đang đăng nhập...' : 'Đăng nhập'}
+            {loginMutation.isLoading ? "Đang đăng nhập..." : "Đăng nhập"}
           </Button>
         </Form>
 

@@ -5,14 +5,14 @@ import {
   TeamOutlined,
   ShoppingCartOutlined,
 } from "@ant-design/icons";
-import SummaryCard from "@/components/admin/SummaryCard";
-import SalesOverview from "@/components/admin/SalesOverview";
-import DesignTipsCard from "@/components/admin/DesignTipsCard";
-import ProductTable from "@/components/admin/ProductTable";
-import Sidebar from "@/components/admin/sidebar";
+import SummaryCard from "@/components/admin/Dashboard/SummaryCard";
+import SalesOverview from "@/components/admin/Dashboard/SalesOverview";
+import DesignTipsCard from "@/components/admin/Dashboard/DesignTipsCard";
+import ProductTable from "@/components/admin/Dashboard/ProductTable";
+import Sidebar from "@/components/admin/Dashboard/sidebar";
 import { useState, useEffect } from "react";
-import HeaderComponent from "@/components/admin/header";
-import LineChart from "@/components/admin/LineChart";
+import HeaderComponent from "@/components/admin/Dashboard/header";
+import LineChart from "@/components/admin/Dashboard/LineChart";
 
 
 const { Content } = Layout;
@@ -96,7 +96,7 @@ export default function Homeadmin() {
             <Col xs={24} lg={8}><DesignTipsCard /></Col>
           </Row>
 
-          <div className="mt-6"><ProductTable /></div>
+          <div className="mt-6 overflow-auto"><ProductTable /></div>
         </Content>
       </Layout>
     </Layout>

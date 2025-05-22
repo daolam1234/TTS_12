@@ -1,10 +1,46 @@
 {
   "users": [
     {
-      "email": "test@example.com",
-      "password": "123456",
-      "role": "admin",
+      "fullName": "viet",
+      "email": "viet223331111@gmail.com",
+      "password": "$2b$10$E82A9bQq0o8aT.6f1qJKs.anq2I68Npi0FTgY23UxQCPycpcuK4TO",
+      "role": "user",
       "id": 1
+    },
+    {
+      "fullName": "viet",
+      "email": "fsfs@gmail.com",
+      "password": "$2b$10$yjpaz19Bi8NOtokcL/2mZedVSLdn1FHOw7HqsHxk/57G22mkdgjk2",
+      "role": "user",
+      "id": 2
+    },
+    {
+      "fullName": "viet",
+      "email": "duan1@gmail.com1",
+      "password": "$2b$10$h4qEFCWq.5SBgwZN7hW2iuE1r.urRs5LTO.kvrHt0IYz9JQQmLEXS",
+      "role": "user",
+      "id": 3
+    },
+    {
+      "fullName": "viet",
+      "email": "a@gmail.com",
+      "password": "$2b$10$1nGSPnOm24U/e7wJrAZ0ZeI890F8JVM3t9xNuGibTtk1WULLmOfIC",
+      "role": "user",
+      "id": 4
+    },
+    {
+      "fullName": "viet",
+      "email": "fcsfs@gmail.com",
+      "password": "$2b$10$kqM2DR3BgWM.6CFN72Cwuew6iQVH1mjPw7AblRts4fFo5JA3UvmoK",
+      "role": "user",
+      "id": 5
+    },
+    {
+      "fullName": "viet",
+      "email": "duan1@gmail.com111",
+      "password": "$2b$10$kN88Ml5/rrZnlCc3q5q74O2MGCC9MiR4F9opWKvRX7p2xQX67Da3a",
+      "role": "user",
+      "id": 6
     }
   ],
   "products": [],
