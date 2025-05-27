@@ -1,24 +1,27 @@
 import { Form, Input, Button } from "antd";
 import { useState } from "react";
 import dayjs from "dayjs";
+import type { CategoryFormValues } from "@/types/categorys/category";
+
+
 
 type Props = {
-  onFinish: (values: any) => void;
+  onFinish: (values: CategoryFormValues) => void;
   onCancel: () => void;
 };
 
 export default function AddCategoryForm({ onFinish, onCancel }: Props) {
-  const [form] = Form.useForm();
+  const [form] = Form.useForm<CategoryFormValues>();
   const [imagePreview, setImagePreview] = useState<string>("");
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = (values: CategoryFormValues) => {
     const formattedValues = {
       ...values,
       createdAt: dayjs().format("YYYY-MM-DD"),
     };
     onFinish(formattedValues);
     form.resetFields();
-    setImagePreview(""); // Xóa preview khi form được submit
+    setImagePreview("");
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {

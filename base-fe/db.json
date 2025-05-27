@@ -61,11 +61,19 @@
       "id": 4
     },
     {
-      "name": "Kẹo",
-      "description": "efwse",
-      "image": "https://www.img.vn/uploads/thuvien/singa-png-20220719150401Tdj1WAJFQr.png",
-      "createdAt": "2025-05-22",
+      "deleted": true,
       "id": 5
+    },
+    {
+      "deleted": true,
+      "id": 6
+    },
+    {
+      "name": "viet",
+      "description": "sss",
+      "image": "https://pbs.twimg.com/profile_images/1701878932176351232/AlNU3WTK_400x400.jpg",
+      "createdAt": "2025-05-24",
+      "id": 7
     }
   ]
 }
