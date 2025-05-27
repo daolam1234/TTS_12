@@ -36,13 +36,13 @@ export const useCreate = ({ resource = "categories" }) => {
 };
 
 // Cập nhật danh mục
-export const useUpdate = ({ resource = "categories", id }: Props) => {
+export const useUpdate = ({ resource = "categories" }) => {
   const nav = useNavigate();
   return useMutation({
-    mutationFn: (values: any) => update({ resource, id, values }),
+    mutationFn: ({ id, values }: { id: string; values: any }) => update({ resource, id, values }),
     onSuccess: () => {
       message.success("Cập nhật thành công");
-      nav("/admin");
+      nav("/admin/categorys"); // sửa lại đúng đường dẫn plural "categories"
     },
   });
 };

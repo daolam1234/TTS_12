@@ -6,8 +6,7 @@ import Homeadmin from "./pages/home";
 import Register from "./pages/auth/register";
 import { ToastContainer } from "react-toastify";
 import Category from "./pages/Category/category";
-
-import AddCategoryForm from "./components/admin/Category/Addcategory";
+import EditCategoryPage from "./pages/Category/edit";
 
 function App() {
   const router = useRoutes([
@@ -31,6 +30,10 @@ function App() {
         {
           path: "categorys",
           element:  <Category />,
+        },
+        {
+          path: "categorys/edit/:id",
+          element:  <EditCategoryPage />,
         },
        
        

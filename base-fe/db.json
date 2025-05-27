@@ -47,18 +47,33 @@
   "orders": [],
   "categories": [
     {
-      "name": "bánh",
-      "description": "ssswww",
-      "image": "234",
+      "name": "wwwwwwwww",
+      "description": "wwwww",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYkmD630BmMsQsMumCF-W7e-WbzHgsgppuVg&s",
       "createdAt": "2025-05-22",
-      "id": 1
+      "id": 3
     },
     {
-      "name": "bánh",
-      "description": "ssswww",
-      "image": "https://citylaila.com/back/images/attractions/gallery/01102023191033_63bdb8299a1a9_1673377833_969080.webp",
+      "name": "Kẹo",
+      "description": "sss",
+      "image": "https://www.img.vn/uploads/thuvien/singa-png-20220719150401Tdj1WAJFQr.png",
       "createdAt": "2025-05-22",
-      "id": 2
+      "id": 4
+    },
+    {
+      "deleted": true,
+      "id": 5
+    },
+    {
+      "deleted": true,
+      "id": 6
+    },
+    {
+      "name": "viet",
+      "description": "sss",
+      "image": "https://pbs.twimg.com/profile_images/1701878932176351232/AlNU3WTK_400x400.jpg",
+      "createdAt": "2025-05-24",
+      "id": 7
     }
   ]
 }

@@ -64,6 +64,7 @@ export default function Homeadmin() {
       </Row>
 
       <div className="mt-6 overflow-auto">
+      <h2 className="text-lg font-semibold mb-2 text-red-500">🔥 Sản phẩm bán chạy</h2>
         <ProductTable />
       </div>
     </AdminLayout>

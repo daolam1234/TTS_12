@@ -1,32 +1,35 @@
 import { Form, Input, Button } from "antd";
-import { useState } from "react";
-import dayjs from "dayjs";
-import type { CategoryFormValues } from "@/types/categorys/category";
-
-
+import { useEffect, useState } from "react";
 
 type Props = {
-  onFinish: (values: CategoryFormValues) => void;
+  onFinish: (values: any) => void;
   onCancel: () => void;
+  initialValues?: any;
 };
 
-export default function AddCategoryForm({ onFinish, onCancel }: Props) {
-  const [form] = Form.useForm<CategoryFormValues>();
+export default function EditCategoryForm({ onFinish, onCancel, initialValues }: Props) {
+  const [form] = Form.useForm();
   const [imagePreview, setImagePreview] = useState<string>("");
 
-  const handleSubmit = (values: CategoryFormValues) => {
-    const formattedValues = {
-      ...values,
-      createdAt: dayjs().format("YYYY-MM-DD"),
-    };
-    onFinish(formattedValues);
-    form.resetFields();
-    setImagePreview("");
-  };
+  useEffect(() => {
+    if (initialValues) {
+      form.setFieldsValue(initialValues);
+      setImagePreview(initialValues.image || "");
+    }
+  }, [initialValues]);
+
+const handleSubmit = (values: any) => {
+  // Khi edit giữ nguyên createdAt ban đầu nếu có
+  if (initialValues?.createdAt) {
+    values.createdAt = initialValues.createdAt;
+  }
+  onFinish(values);
+  form.resetFields();
+  setImagePreview("");
+};
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const url = e.target.value;
-    setImagePreview(url);
+    setImagePreview(e.target.value);
   };
 
   return (
@@ -70,7 +73,7 @@ export default function AddCategoryForm({ onFinish, onCancel }: Props) {
         <div className="flex justify-end gap-2">
           <Button onClick={onCancel}>Hủy</Button>
           <Button type="primary" htmlType="submit">
-            Thêm mới
+            Cập nhật
           </Button>
         </div>
       </Form.Item>
