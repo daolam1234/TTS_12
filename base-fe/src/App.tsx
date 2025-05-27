@@ -7,6 +7,10 @@ import Register from "./pages/auth/register";
 import { ToastContainer } from "react-toastify";
 import Category from "./pages/Category/category";
 import EditCategoryPage from "./pages/Category/edit";
+import QuanLySanPham from "./pages/san_pham/quan_ly_san_pham";
+import AddSanPham from "./pages/san_pham/add_san_pham";
+import EditSanPham from "./pages/san_pham/edit_san_pham";
+import ProductDetailPage from "./pages/san_pham/chi_tiet_san_pham";
 
 function App() {
   const router = useRoutes([
@@ -34,6 +38,22 @@ function App() {
         {
           path: "categorys/edit/:id",
           element:  <EditCategoryPage />,
+        },
+        {
+          path: "products",
+          element:  <QuanLySanPham />,
+        },
+        {
+          path: "products/add",
+          element:  <AddSanPham />,
+        },
+        {
+          path: "products/edit/:id",
+          element:  <EditSanPham />,
+        },
+        {
+          path: "products/details/:id",
+          element:  <ProductDetailPage />,
         },
        
        
