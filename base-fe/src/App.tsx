@@ -11,6 +11,8 @@ import QuanLySanPham from "./pages/san_pham/quan_ly_san_pham";
 import AddSanPham from "./pages/san_pham/add_san_pham";
 import EditSanPham from "./pages/san_pham/edit_san_pham";
 import ProductDetailPage from "./pages/san_pham/chi_tiet_san_pham";
+import SizeListPage from "./pages/size/List_size_page";
+import SizeAddPage from "./pages/size/Add_size";
 
 function App() {
   const router = useRoutes([
@@ -54,6 +56,14 @@ function App() {
         {
           path: "products/details/:id",
           element:  <ProductDetailPage />,
+        },
+        {
+          path: "size",
+          element:  <SizeListPage />,
+        },
+        {
+          path: "size/add",
+          element:  <SizeAddPage />,
         },
        
        
