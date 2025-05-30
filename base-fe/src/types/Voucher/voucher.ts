@@ -1,0 +1,15 @@
+export interface Voucher {
+    id: number;
+    name: string;
+    code: string;
+    status:string;
+    discountPercent: number;
+    maxDiscount: number;
+    quantity: number;
+    description: string;
+    startDate: string;
+    endDate: string;
+    createdAt: string;
+    updatedAt: string;
+  }
+  

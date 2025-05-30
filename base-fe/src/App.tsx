@@ -11,6 +11,8 @@ import QuanLySanPham from "./pages/san_pham/quan_ly_san_pham";
 import AddSanPham from "./pages/san_pham/add_san_pham";
 import EditSanPham from "./pages/san_pham/edit_san_pham";
 import ProductDetailPage from "./pages/san_pham/chi_tiet_san_pham";
+import VouchersPage from "./pages/vouchers/voucherPage";
+import VoucherFormPage from "./pages/vouchers/voucherFormPage";
 
 function App() {
   const router = useRoutes([
@@ -54,6 +56,14 @@ function App() {
         {
           path: "products/details/:id",
           element:  <ProductDetailPage />,
+        },
+        {
+          path: "voucher",
+          element:  <VouchersPage />,
+        },
+        {
+          path: "voucher/add",
+          element:  <VoucherFormPage />,
         },
        
        
