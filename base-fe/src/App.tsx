@@ -13,6 +13,9 @@ import VouchersPage from "./pages/vouchers/voucherPage";
 import SizeListPage from "./pages/size/List_size_page";
 import SizeAddPage from "./pages/size/Add_size";
 import VoucherFormPage from "./pages/vouchers/voucherFormPage";
+import ListAccountPage from "./pages/account/List_Admin_account";
+import AddAdminPage from "./pages/account/Add_Admin_account_Page";
+import ListAccountUsePage from "./pages/account/List_user_account_page";
 
 function App() {
   const router = useRoutes([
@@ -75,6 +78,21 @@ function App() {
         {
           path: "size/add",
           element:  <SizeAddPage />,
+
+        },
+        {
+          path: "account_admin",
+          element:  <ListAccountPage />,
+
+        },
+        {
+          path: "account_admin/add",
+          element:  <AddAdminPage />,
+
+        },
+        {
+          path: "account_user",
+          element:  <ListAccountUsePage />,
 
         },
        
