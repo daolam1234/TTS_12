@@ -11,13 +11,10 @@ import QuanLySanPham from "./pages/san_pham/quan_ly_san_pham";
 import AddSanPham from "./pages/san_pham/add_san_pham";
 import EditSanPham from "./pages/san_pham/edit_san_pham";
 import ProductDetailPage from "./pages/san_pham/chi_tiet_san_pham";
-<<<<<<< HEAD
+
 import VouchersPage from "./pages/vouchers/voucherPage";
-import VoucherFormPage from "./pages/vouchers/voucherFormPage";
-=======
 import SizeListPage from "./pages/size/List_size_page";
 import SizeAddPage from "./pages/size/Add_size";
->>>>>>> d53f25a907717d0021daa37f2d72078b2d1bc68e
 
 function App() {
   const router = useRoutes([
@@ -63,21 +60,19 @@ function App() {
           element:  <ProductDetailPage />,
         },
         {
-<<<<<<< HEAD
+
           path: "voucher",
           element:  <VouchersPage />,
         },
+        
         {
-          path: "voucher/add",
-          element:  <VoucherFormPage />,
-=======
-          path: "size",
+         path: "size",
           element:  <SizeListPage />,
         },
         {
           path: "size/add",
           element:  <SizeAddPage />,
->>>>>>> d53f25a907717d0021daa37f2d72078b2d1bc68e
+
         },
        
        
