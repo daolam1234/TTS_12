@@ -1,6 +1,4 @@
 import { useRoutes } from "react-router-dom";
-
-
 import Login from "./pages/auth/login";
 import Homeadmin from "./pages/home";
 import Register from "./pages/auth/register";
@@ -11,10 +9,10 @@ import QuanLySanPham from "./pages/san_pham/quan_ly_san_pham";
 import AddSanPham from "./pages/san_pham/add_san_pham";
 import EditSanPham from "./pages/san_pham/edit_san_pham";
 import ProductDetailPage from "./pages/san_pham/chi_tiet_san_pham";
-
 import VouchersPage from "./pages/vouchers/voucherPage";
 import SizeListPage from "./pages/size/List_size_page";
 import SizeAddPage from "./pages/size/Add_size";
+import VoucherFormPage from "./pages/vouchers/voucherFormPage";
 
 function App() {
   const router = useRoutes([
@@ -63,6 +61,11 @@ function App() {
 
           path: "voucher",
           element:  <VouchersPage />,
+        },
+        {
+
+          path: "voucher/add",
+          element:  <VoucherFormPage />,
         },
         
         {
