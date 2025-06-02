@@ -13,6 +13,7 @@ import VouchersPage from "./pages/vouchers/voucherPage";
 import SizeListPage from "./pages/size/List_size_page";
 import SizeAddPage from "./pages/size/Add_size";
 import VoucherFormPage from "./pages/vouchers/voucherFormPage";
+import CommentList from "./pages/comment/CommentList";
 
 function App() {
   const router = useRoutes([
@@ -77,6 +78,12 @@ function App() {
           element:  <SizeAddPage />,
 
         },
+        {
+          path: "comments",
+          element:  <CommentList />,
+
+        },
+
        
        
       ],
