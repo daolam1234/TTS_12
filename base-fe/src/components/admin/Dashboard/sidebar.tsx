@@ -33,15 +33,16 @@ export default function Sidebar() {
     if (location.pathname.startsWith("/admin/billing")) return "billing";
     if (location.pathname.startsWith("/admin/rtl")) return "rtl";
     if (location.pathname.startsWith("/admin/profile")) return "profile";
-    if (location.pathname.startsWith("/admin/comments")) return "comments"; // 👈 THÊM ĐIỀU KIỆN
+    if (location.pathname.startsWith("/admin/comments")) return "comments";
     return "home";
   })();
 
   return (
     <Menu
       mode="inline"
-      theme="light"
-      selectedKeys={[selectedKey]}
+      theme="light" // ✅ Giao diện màu sáng
+      selectedKeys={[selectedKey]} // ✅ Highlight theo trang đang xem
+
     >
       <Menu.Item key="home" icon={<HomeOutlined />}>
         <Link to="/admin/dashboard">Home</Link>
@@ -66,11 +67,10 @@ export default function Sidebar() {
       <Menu.Item key="Voucher" icon={<TagOutlined />}>
         <Link to="/admin/Voucher">Quản lý mã giảm giá</Link>
       </Menu.Item>
-
       <Menu.Item key="comments" icon={<CommentOutlined />}>
         <Link to="/admin/comments">Quản lý bình luận</Link>
       </Menu.Item>
-
+      
       <SubMenu key="account" icon={<UserOutlined />} title="Tài khoản">
         <Menu.Item key="admin-account">
           <Link to="/admin/account_admin">Admin</Link>
