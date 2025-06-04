@@ -10,7 +10,7 @@ const ListAccountUsePage = () => {
   return (
     <AdminLayout>
       <div className="p-4 bg-white rounded shadow">
-        <h1 className="text-xl font-semibold mb-4">DANH SÁCH user</h1>
+        <h1 className="text-xl font-semibold mb-4">DANH SÁCH USER </h1>
        
       <AccountUseTable />
       </div>

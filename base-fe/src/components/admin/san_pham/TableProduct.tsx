@@ -138,7 +138,7 @@ const ProductTable = () => {
       dataIndex: "status",
       key: "status",
       align: "center" as const,
-      width: 100,
+      width: 120,
       render: (status: string) => (
         <span
           style={{

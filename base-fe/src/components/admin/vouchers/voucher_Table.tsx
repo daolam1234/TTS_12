@@ -56,24 +56,12 @@ const VoucherTable: React.FC<VoucherTableProps> = ({ data, onEdit, onToggleStatu
         );
       },
     },
-    {
-      title: 'Trạng thái hoạt động',
-      key: 'status',
-      render: (_, record) => (
-        <div className="flex items-center">
-        <Switch
-          checked={record.status}
-          checkedChildren="Hiện"
-          unCheckedChildren="Ẩn"
-          onChange={(checked) => onToggleStatus?.(record.id, checked)}
-        />
-      </div>
-      ),
-    },
+    
     {
       title: 'Mô tả',
       dataIndex: 'description',
       key: 'description',
+      width: 120,
     },
     {
       title: 'Ngày bắt đầu',

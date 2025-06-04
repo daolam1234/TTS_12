@@ -55,8 +55,8 @@ const CommentList = () => {
             onSearchChange={setSearch}
             onDateChange={handleDateChange}
           />
-
-         <CommentTable
+        <div className="mt-6 overflow-auto">
+           <CommentTable
             data={data.filter((item) =>
               `${item.product} ${item.user} ${item.content}`
                 .toLowerCase()
@@ -64,6 +64,8 @@ const CommentList = () => {
             )}
             onToggleStatus={handleToggleStatus}
           />
+        </div>
+        
           </div>
         </AdminLayout>
       );

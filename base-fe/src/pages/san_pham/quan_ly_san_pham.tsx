@@ -15,7 +15,10 @@ export default function QuanLySanPham() {
           <h2 className="text-lg font-semibold"> Quản lý sản phẩm</h2>
          
         </div>
-        <ProductTable />
+        <div className="mt-6 overflow-auto">
+           <ProductTable />
+        </div>
+       
       </div>
 
       

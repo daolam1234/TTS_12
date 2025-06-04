@@ -23,7 +23,10 @@ export default function SizeListPage() {
           <h2 className="text-lg font-semibold"> Quản lý biến thể</h2>
          
         </div>
-        <SizeTable sizes={sizes} />
+        <div className="mt-6 overflow-auto">
+            <SizeTable sizes={sizes} />
+        </div>
+      
       </div>
 
       
