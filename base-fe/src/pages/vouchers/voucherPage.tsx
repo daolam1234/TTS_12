@@ -29,13 +29,16 @@ export default function VouchersPage() {
     <AdminLayout>
       <div className="bg-white p-4 rounded shadow">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-semibold">Thêm  mới kích cỡ</h2>
+          <h2 className="text-lg font-semibold">QUẢN LÝ MÃ GIẢM GIÁ</h2>
          
         </div>
-        <VoucherTable
+        <div className="mt-6 overflow-auto">
+          <VoucherTable
             data={mockData}
             onEdit={(voucher) => navigate(`/admin/vouchers/edit/${voucher.id}`)}
           />
+        </div>
+        
       </div>
 
       
