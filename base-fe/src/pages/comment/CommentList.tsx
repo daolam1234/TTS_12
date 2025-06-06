@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
-import AdminLayout from '@/layouts/AdminLayout';
 
-import CommentSearchBar from '@/components/admin/comments/CommentSearchBar';
+
+import CommentSearchBar from '@/components/admin/Comment/CommentSearchBar';
 import type { Comment } from '@/types/comments/comment';
-import CommentTable from '@/components/admin/comments/CommentTable';
+import CommentTable from '@/components/admin/Comment/CommentTable';
 
 const initialData: Comment[] = [
   {
@@ -47,7 +47,7 @@ const CommentList = () => {
       // Lọc theo ngày nếu cần
     };
     return (
-        <AdminLayout>
+      
           <div className="p-4 bg-white rounded shadow">
             <h1 className="text-xl font-semibold mb-4">DANH SÁCH BÌNH LUẬN</h1>
             <CommentSearchBar
@@ -67,7 +67,7 @@ const CommentList = () => {
         </div>
         
           </div>
-        </AdminLayout>
+        
       );
     }
     export default CommentList;

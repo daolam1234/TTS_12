@@ -45,7 +45,7 @@ export default function Homeadmin() {
   ];
 
   return (
-    <AdminLayout>
+    <div>
       <Row gutter={16}>
         {summaryCards.map((card, index) => (
           <Col xs={24} sm={12} lg={6} key={index}>
@@ -63,6 +63,6 @@ export default function Homeadmin() {
         </Col>
       </Row>
 
-    </AdminLayout>
+    </div>
   );
 }

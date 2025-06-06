@@ -13,13 +13,20 @@ const mockProducts = [
     category: 'clothing',
     image: [{ uid: '-1', name: 'team-2.jpg', url: '../assets/img/team-2.jpg' }],
   },
-  // ... thêm các sản phẩm khác nếu cần
 ];
 
 const { Option } = Select;
 
+type ProductFormValues = {
+  productName: string;
+  price: number;
+  size: string;
+  category: string;
+  image: { uid: string; name: string; url: string }[];
+};
+
 function FormeditSanPham() {
-  const [form] = Form.useForm();
+  const [form] = Form.useForm<ProductFormValues>();
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -35,9 +42,9 @@ function FormeditSanPham() {
     }
   }, [id, form]);
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: ProductFormValues) => {
     console.log('Updated values:', values);
-    alert(`Đã cập nhật sản phẩm ID ${id}`);
+ 
   };
 
   return (
@@ -51,7 +58,6 @@ function FormeditSanPham() {
           >
             <Input placeholder="Nhập tên sản phẩm" />
           </Form.Item>
-
           <Form.Item
             label="Giá sản phẩm"
             name="price"
@@ -61,12 +67,11 @@ function FormeditSanPham() {
               style={{ width: '100%' }}
               min={0}
               step={1000}
-              formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-              parser={(value) => value!.replace(/\$\s?|(,*)/g, '')}
+           
+        
               placeholder="Nhập giá sản phẩm"
             />
           </Form.Item>
-
           <Form.Item
             label="Kích cỡ"
             name="size"
@@ -80,7 +85,6 @@ function FormeditSanPham() {
               <Option value="xxl">XXL</Option>
             </Select>
           </Form.Item>
-
           <Form.Item
             label="Danh mục"
             name="category"
@@ -93,7 +97,6 @@ function FormeditSanPham() {
               <Option value="bags">Túi xách</Option>
             </Select>
           </Form.Item>
-
           <Form.Item
             label="Hình ảnh"
             name="image"
@@ -104,7 +107,6 @@ function FormeditSanPham() {
               <Button icon={<UploadOutlined />}>Tải ảnh lên</Button>
             </Upload>
           </Form.Item>
-
           <Form.Item className="text-right">
             <Button type="primary" htmlType="submit">
               Lưu thay đổi

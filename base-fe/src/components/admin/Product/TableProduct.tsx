@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Table, Input, Select, Button, Space, Modal, message } from "antd";
 import { Link } from "react-router-dom";
+import type { Product } from "@/types/product/product";
 
 const { Option } = Select;
 const itemsPerPage = 5;
 
-const initialProducts = [
+// Định nghĩa type cho sản phẩm
+
+const initialProducts: Product[] = [
   {
     id: 1,
     name: "Sản phẩm 1",
@@ -34,7 +37,7 @@ const initialProducts = [
 ];
 
 const ProductTable = () => {
-  const [products, setProducts] = useState(initialProducts);
+  const [products, setProducts] = useState<Product[]>(initialProducts);
   const [searchName, setSearchName] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -77,7 +80,8 @@ const ProductTable = () => {
     {
       title: "ID",
       key: "index",
-      render: (_: any, __: any, index: number) => (currentPage - 1) * itemsPerPage + index + 1,
+      render: (_: unknown, __: Product, index: number) =>
+        (currentPage - 1) * itemsPerPage + index + 1,
       width: 60,
     },
     {
@@ -123,7 +127,9 @@ const ProductTable = () => {
       dataIndex: "price",
       key: "price",
       align: "center" as const,
-      render: (price: string) => <span style={{ fontWeight: "bold", color: "#3b82f6" }}>{price}</span>,
+      render: (price: string) => (
+        <span style={{ fontWeight: "bold", color: "#3b82f6" }}>{price}</span>
+      ),
       width: 100,
     },
     {
@@ -174,12 +180,12 @@ const ProductTable = () => {
       key: "actions",
       align: "center" as const,
       width: 180,
-      render: (_: any, record: any) => (
+      render: (_: unknown, record: Product) => (
         <Space size="middle">
           <Link to={`/admin/products/details/${record.id}`} className="text-yellow-600 hover:underline">
             <i className="fas fa-eye mr-1" /> Xem
           </Link>
-          <Button type="link" danger onClick={() => confirmDelete(record.id, record.name )}>
+          <Button type="link" danger onClick={() => confirmDelete(record.id, record.name)}>
             <i className="far fa-trash-alt mr-1" /> Xóa mềm
           </Button>
           <Link to={`/admin/products/edit/${record.id}`} className="text-blue-600 hover:underline">
@@ -225,7 +231,7 @@ const ProductTable = () => {
         </Select>
       </div>
 
-      <Table
+      <Table<Product>
         columns={columns}
         dataSource={currentItems}
         pagination={{

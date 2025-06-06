@@ -47,10 +47,7 @@
   "orders": [],
   "categories": [
     {
-      "name": "wwwwwwwww",
-      "description": "wwwww",
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYkmD630BmMsQsMumCF-W7e-WbzHgsgppuVg&s",
-      "createdAt": "2025-05-22",
+      "deleted": true,
       "id": 3
     },
     {

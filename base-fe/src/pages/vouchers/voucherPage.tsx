@@ -1,5 +1,5 @@
 
-import VoucherTable from "@/components/admin/vouchers/voucher_Table";
+import VoucherTable from "@/components/admin/vouchers/voucherTable";
 import AdminLayout from "@/layouts/AdminLayout";
 import type { Voucher } from "@/types/Voucher/voucher";
 
@@ -26,7 +26,7 @@ export default function VouchersPage() {
 
     const navigate = useNavigate();
   return (
-    <AdminLayout>
+  
       <div className="bg-white p-4 rounded shadow">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-semibold">QUẢN LÝ MÃ GIẢM GIÁ</h2>
@@ -42,6 +42,6 @@ export default function VouchersPage() {
       </div>
 
       
-    </AdminLayout>
+    
   );
 }
