@@ -34,23 +34,7 @@ const VariantTable: React.FC<Props> = ({ variants, onEdit, onStop }) => {
       title: 'Kích cỡ',
       dataIndex: 'size',
     },
-    {
-      title: 'Màu sắc',
-      render: (_: any, record: Variant) => (
-        <Space>
-          {record.color}
-          <div
-            style={{
-              backgroundColor: record.colorCode,
-              width: 14,
-              height: 14,
-              borderRadius: '50%',
-              border: '1px solid #ccc',
-            }}
-          />
-        </Space>
-      ),
-    },
+   
     {
       title: 'Số lượng',
       dataIndex: 'quantity',

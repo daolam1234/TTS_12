@@ -22,7 +22,6 @@ export default function ProductDetailPage() {
             id: 1,
             image: 'https://example.com/img1.jpg',
             size: '29',
-            color: 'Be',
             colorCode: '#f5deb3',
             quantity: 36,
             status: 'Mở bán',
@@ -31,7 +30,7 @@ export default function ProductDetailPage() {
             id: 2,
             image: 'https://example.com/img2.jpg',
             size: '30',
-            color: 'Đen',
+            
             colorCode: '#000000',
             quantity: 31,
             status: 'Mở bán',

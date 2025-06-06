@@ -11,6 +11,7 @@ export  interface  Product  {
   isDeleted: boolean;
 };
 export interface ProductFormValues {
+id:number | null; // Optional for new products
   name: string;
   productName: string; 
   size:string;
