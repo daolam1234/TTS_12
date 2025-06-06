@@ -45,7 +45,7 @@ export default function Sidebar() {
 
     >
       <Menu.Item key="home" icon={<HomeOutlined />}>
-        <Link to="/admin/dashboard">Home</Link>
+        <Link to="/admin">Home</Link>
       </Menu.Item>
 
       <Menu.Item key="products" icon={<AppstoreOutlined />}>
@@ -80,23 +80,7 @@ export default function Sidebar() {
         </Menu.Item>
       </SubMenu>
 
-      <Menu.Item key="billing" icon={<CreditCardOutlined />}>
-        <Link to="/admin/billing">Billing</Link>
-      </Menu.Item>
-
-      <Menu.Item key="rtl" icon={<GlobalOutlined />}>
-        <Link to="/admin/rtl">RTL</Link>
-      </Menu.Item>
-
-      <Menu.Divider />
-
-      <Menu.Item key="profile" icon={<UserOutlined />}>
-        <Link to="/admin/profile">Profile</Link>
-      </Menu.Item>
-
-      <Menu.Item key="signin" icon={<LoginOutlined />}>
-        <Link to="/signin">Sign In</Link>
-      </Menu.Item>
+     
     </Menu>
   );
 }

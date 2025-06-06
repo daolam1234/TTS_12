@@ -1,24 +1,23 @@
-// src/pages/admin/Category.tsx
-
-import FormAddSanPham from "@/components/admin/san_pham/Formadd";
-import AdminLayout from "@/layouts/AdminLayout";
+import FormeditSanPham from "@/components/admin/Product/FormEdit";
 
 
 
-export default function AddSanPham() {
+
+
+export default function EditSanPham() {
 
 
   return (
-    <AdminLayout>
+  
       <div className="bg-white p-4 rounded shadow">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-semibold">Thêm sản phẩm</h2>
          
         </div>
-        <FormAddSanPham />
+        <FormeditSanPham />
       </div>
 
       
-    </AdminLayout>
+    
   );
 }
