@@ -1,17 +1,14 @@
 // src/components/layouts/AdminLayout.tsx
 import { Layout, Drawer, Grid } from "antd";
 import { useState } from "react";
+import { Outlet } from "react-router-dom";
 import Sidebar from "@/components/admin/Dashboard/sidebar";
 import HeaderComponent from "@/components/admin/Dashboard/header";
 
 const { Content, Sider } = Layout;
 const { useBreakpoint } = Grid;
 
-type Props = {
-  children: React.ReactNode;
-};
-
-export default function AdminLayout({ children }: Props) {
+export default function AdminLayout() {
   const screens = useBreakpoint();
   const isMobile = !screens.md;
   const [drawerVisible, setDrawerVisible] = useState(false);
@@ -38,7 +35,9 @@ export default function AdminLayout({ children }: Props) {
 
       <Layout>
         <HeaderComponent onToggleMenu={toggleDrawer} isMobile={isMobile} />
-        <Content className="p-6 bg-gray-100">{children}</Content>
+        <Content className="p-6 bg-gray-100">
+          <Outlet />
+        </Content>
       </Layout>
     </Layout>
   );

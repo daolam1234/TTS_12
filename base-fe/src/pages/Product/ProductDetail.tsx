@@ -1,9 +1,9 @@
 // src/pages/admin/Category.tsx
 
-import ProductInfo from "@/components/admin/san_pham/ProductInfo";
-import ProductTable from "@/components/admin/san_pham/TableProduct";
-import VariantTable from "@/components/admin/san_pham/VariantTable";
-import AdminLayout from "@/layouts/AdminLayout";
+import ProductInfo from "@/components/admin/Product/ProductInfo";
+
+import VariantTable from "@/components/admin/Product/VariantTable";
+
 import { useState } from "react";
 
 
@@ -47,7 +47,7 @@ export default function ProductDetailPage() {
       };
 
   return (
-    <AdminLayout>
+  
       <div className="bg-white p-4 rounded shadow">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-semibold">Chi tiết sản phẩm</h2>
@@ -64,6 +64,6 @@ export default function ProductDetailPage() {
       </div>
 
       
-    </AdminLayout>
+    
   );
 }

@@ -45,7 +45,7 @@ export default function Homeadmin() {
   ];
 
   return (
-    <AdminLayout>
+    <div>
       <Row gutter={16}>
         {summaryCards.map((card, index) => (
           <Col xs={24} sm={12} lg={6} key={index}>
@@ -63,10 +63,6 @@ export default function Homeadmin() {
         </Col>
       </Row>
 
-      <div className="mt-6 overflow-auto">
-      <h2 className="text-lg font-semibold mb-2 text-red-500">🔥 Sản phẩm bán chạy</h2>
-        <ProductTable />
-      </div>
-    </AdminLayout>
+    </div>
   );
 }

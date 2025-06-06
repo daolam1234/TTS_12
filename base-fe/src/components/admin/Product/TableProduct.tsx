@@ -1,52 +1,30 @@
 import React, { useState } from "react";
-import { Table, Input, Select, Button, Space, Modal, message } from "antd";
+import { Table, Input, Select, Button, Space, Modal, Spin, Image } from "antd";
 import { Link } from "react-router-dom";
+import { useList, useSoftDeleteProduct } from "@/hooks/useProducts";
+import type { Product } from "@/types/product/product";
 
 const { Option } = Select;
 const itemsPerPage = 5;
 
-const initialProducts = [
-  {
-    id: 1,
-    name: "Sản phẩm 1",
-    description: "Mô tả sản phẩm",
-    price: "10.000đ",
-    category: "Áo",
-    status: "còn hàng",
-    stock: 30,
-    date: "20/3/2025",
-    image: "../assets/img/team-2.jpg",
-    isDeleted: false,
-  },
-  {
-    id: 2,
-    name: "Sản phẩm 2",
-    description: "Mô tả khác",
-    price: "15.000đ",
-    category: "Quần",
-    status: "hết hàng",
-    stock: 0,
-    date: "18/4/2025",
-    image: "../assets/img/team-3.jpg",
-    isDeleted: false,
-  },
-  // ... các sản phẩm khác
-];
+const ProductTable: React.FC = () => {
+  const { data: products = [], isLoading } = useList();
+  const softDeleteMutation = useSoftDeleteProduct();
 
-const ProductTable = () => {
-  const [products, setProducts] = useState(initialProducts);
   const [searchName, setSearchName] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
+  // Lọc sản phẩm chưa xóa, theo tên, theo category
   const filteredProducts = products
-    .filter((product) => !product.isDeleted)
-    .filter((product) => {
-      const matchesName = product.name.toLowerCase().includes(searchName.toLowerCase());
-      const matchesCategory = selectedCategory === "" || product.category === selectedCategory;
-      return matchesName && matchesCategory;
-    });
+    .filter((p: Product) => !p.isDeleted)
+    .filter(
+      (p: Product) =>
+        (p.name ?? "").toLowerCase().includes(searchName.toLowerCase()) &&
+        (selectedCategory === "" || p.category === selectedCategory)
+    );
 
+  // Phân trang client
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredProducts.slice(indexOfFirstItem, indexOfLastItem);
@@ -55,6 +33,7 @@ const ProductTable = () => {
     setCurrentPage(page);
   };
 
+  // Xác nhận xóa mềm
   const confirmDelete = (id: number, name: string) => {
     Modal.confirm({
       title: "Xác nhận xóa sản phẩm",
@@ -63,12 +42,7 @@ const ProductTable = () => {
       okType: "danger",
       cancelText: "Hủy",
       onOk() {
-        setProducts((prev) =>
-          prev.map((product) =>
-            product.id === id ? { ...product, isDeleted: true } : product
-          )
-        );
-        message.success("Đã xóa sản phẩm thành công");
+        softDeleteMutation.mutate(id);
       },
     });
   };
@@ -77,44 +51,40 @@ const ProductTable = () => {
     {
       title: "ID",
       key: "index",
-      render: (_: any, __: any, index: number) => (currentPage - 1) * itemsPerPage + index + 1,
+      render: (_: unknown, __: Product, index: number) => (currentPage - 1) * itemsPerPage + index + 1,
       width: 60,
     },
     {
-      title: "Ảnh",
+      title: "Hình ảnh",
       dataIndex: "image",
       key: "image",
-      render: (img: string) => (
-        <img
-          src={img}
-          alt="product"
-          style={{ width: 40, height: 40, objectFit: "cover", borderRadius: "50%" }}
-        />
-      ),
-      width: 70,
+      render: (imageSrc: string) => <Image src={imageSrc} />,
+      width: 160,
     },
     {
       title: "Tên sản phẩm",
       dataIndex: "name",
       key: "name",
-      width: 200,
+      width: 60,
       render: (name: string) => <strong>{name}</strong>,
     },
     {
       title: "Mô tả",
       dataIndex: "description",
       key: "description",
-      width: 100,
-      render: (description: string) => (
+      width: 120,
+      render: (desc: string) => (
         <div
           style={{
             whiteSpace: "nowrap",
             overflow: "hidden",
             textOverflow: "ellipsis",
+            maxWidth: 100,
+            fontSize: 13,
           }}
-          title={description}
+          title={desc}
         >
-          {description}
+          {desc}
         </div>
       ),
     },
@@ -123,7 +93,9 @@ const ProductTable = () => {
       dataIndex: "price",
       key: "price",
       align: "center" as const,
-      render: (price: string) => <span style={{ fontWeight: "bold", color: "#3b82f6" }}>{price}</span>,
+      render: (price: string) => (
+        <span style={{ fontWeight: "bold", color: "#3b82f6" }}>{price}</span>
+      ),
       width: 100,
     },
     {
@@ -138,7 +110,7 @@ const ProductTable = () => {
       dataIndex: "status",
       key: "status",
       align: "center" as const,
-      width: 100,
+      width: 120,
       render: (status: string) => (
         <span
           style={{
@@ -164,8 +136,8 @@ const ProductTable = () => {
     },
     {
       title: "Ngày tạo",
-      dataIndex: "date",
-      key: "date",
+      dataIndex: "createdAt",
+      key: "createdAt",
       align: "center" as const,
       width: 140,
     },
@@ -174,12 +146,12 @@ const ProductTable = () => {
       key: "actions",
       align: "center" as const,
       width: 180,
-      render: (_: any, record: any) => (
+      render: (_: unknown, record: Product) => (
         <Space size="middle">
           <Link to={`/admin/products/details/${record.id}`} className="text-yellow-600 hover:underline">
             <i className="fas fa-eye mr-1" /> Xem
           </Link>
-          <Button type="link" danger onClick={() => confirmDelete(record.id, record.name )}>
+          <Button type="link" danger onClick={() => confirmDelete(record.id, record.name)}>
             <i className="far fa-trash-alt mr-1" /> Xóa mềm
           </Button>
           <Link to={`/admin/products/edit/${record.id}`} className="text-blue-600 hover:underline">
@@ -189,6 +161,8 @@ const ProductTable = () => {
       ),
     },
   ];
+
+  if (isLoading) return <Spin size="large" className="m-10" />;
 
   return (
     <div className="p-6 bg-white rounded shadow">
@@ -222,6 +196,7 @@ const ProductTable = () => {
           <Option value="Áo">Áo</Option>
           <Option value="Quần">Quần</Option>
           <Option value="Phụ kiện">Phụ kiện</Option>
+          {/* Thêm danh mục khác nếu có */}
         </Select>
       </div>
 

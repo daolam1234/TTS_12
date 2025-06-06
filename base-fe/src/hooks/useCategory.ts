@@ -1,11 +1,11 @@
- // hoặc "@/providers/category"
-import { getList, getOne, update, create,type Props } from "@/providers/category";
+
+import { getList, getOne, update, create,type Props } from "@/services/category";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { message } from "antd";
 
 import { useNavigate } from "react-router-dom";
 
-// Lấy danh sách
+
 export const useList = ({ resource = "categories" }) => {
   return useQuery({
     queryKey: [resource],
@@ -13,7 +13,7 @@ export const useList = ({ resource = "categories" }) => {
   });
 };
 
-// Lấy 1 danh mục theo ID
+
 export const useOne = ({ resource = "categories", id }: Props) => {
   return useQuery({
     queryKey: [resource, id],
@@ -22,7 +22,7 @@ export const useOne = ({ resource = "categories", id }: Props) => {
   });
 };
 
-// Tạo mới danh mục
+
 export const useCreate = ({ resource = "categories" }) => {
   return useMutation({
     mutationFn: (values: any) => create({ resource, values }),
@@ -35,14 +35,14 @@ export const useCreate = ({ resource = "categories" }) => {
   });
 };
 
-// Cập nhật danh mục
+
 export const useUpdate = ({ resource = "categories" }) => {
   const nav = useNavigate();
   return useMutation({
     mutationFn: ({ id, values }: { id: string; values: any }) => update({ resource, id, values }),
     onSuccess: () => {
       message.success("Cập nhật thành công");
-      nav("/admin/categorys"); // sửa lại đúng đường dẫn plural "categories"
+      nav("/admin/categorys"); 
     },
   });
 };
