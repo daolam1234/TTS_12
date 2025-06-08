@@ -1,7 +1,8 @@
+import type { ProductFormValues } from "@/types/product/product";
 import instanceAxios from "@/utils/axios";
 
 // Tạo sản phẩm mới
-export const createProduct = async (values: any) => {
+export const createProduct = async (values: ProductFormValues) => {
   const { data } = await instanceAxios.post("/products", values);
   return data;
 };
@@ -19,12 +20,12 @@ export const getProductById = async (id: number | string) => {
 };
 
 // Cập nhật sản phẩm
-export const updateProduct = async ({ id, values }: { id: string | number; values: any }) => {
-  const { data } = await instanceAxios.put(`/products/${id}`, values);
+export const updateProduct = async ({ id, values }: { id: string | number; values: ProductFormValues }) => {
+  const { data } = await instanceAxios.patch(`/products/${id}`, values);
   return data;
 };
 
 // Xóa mềm sản phẩm
 export const softDeleteProduct = async (id: number | string) => {
-  return updateProduct(id, { isDeleted: true });
+  return updateProduct({ id, values: { deleted: true } });
 };
