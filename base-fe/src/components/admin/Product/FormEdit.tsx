@@ -3,9 +3,9 @@ import { Form, Input, InputNumber, Select, Button, message, Space, Upload } from
 import { UploadOutlined } from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import { useOneProduct, useUpdateProduct } from "@/hooks/useProducts";
+import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
 import type { ProductFormValues } from "@/types/product/product";
 import type { UploadFile } from "antd/es/upload/interface";
-import dayjs from "dayjs";
 import { useList as useCategoryList } from "@/hooks/useCategory";
 
 const { Option } = Select;
@@ -14,11 +14,13 @@ const FormeditSanPham: React.FC = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
+
   const { data: product, isLoading } = useOneProduct({ id });
   const { mutate, isPending } = useUpdateProduct();
+  const [uploading, setUploading] = useState(false);
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const { data: categories = [], isLoading: loadingCategories } = useCategoryList({ resource: "categories" });
+  const { data: categories = [], isLoading: loading } = useCategoryList({ resource: "categories" });
 
   useEffect(() => {
     if (product) {
@@ -38,24 +40,40 @@ const FormeditSanPham: React.FC = () => {
             name: "image.png",
             url: product.image,
             status: "done",
-            type: "image/png", 
+            type: "image/png",
           } as UploadFile,
         ]);
-      } else {
-        setFileList([]);
       }
     }
   }, [product, form]);
 
-  const onFinish = (values: ProductFormValues) => {
-    const imageUrl =
-      fileList[0]?.url ||
-      fileList[0]?.thumbUrl ||
-      (fileList[0]?.originFileObj ? URL.createObjectURL(fileList[0].originFileObj) : "");
-    const updatedAt = dayjs().format("YYYY-MM-DD");
+  const handleChange = ({ fileList: newFileList }: { fileList: UploadFile[] }) => {
+    setFileList(newFileList.slice(-1)); // chỉ giữ lại 1 ảnh
+  };
+
+  const onFinish = async (values: ProductFormValues) => {
+    let imageUrl = product?.image || "";
+
+    // Nếu có file ảnh mới và là local file, upload lên Cloudinary
+    if (fileList.length > 0 && fileList[0].originFileObj) {
+      try {
+        setUploading(true);
+        imageUrl = await uploadToCloudinary(fileList[0].originFileObj as File);
+      } catch (error) {
+        message.error("Lỗi upload ảnh: " + (error as Error).message);
+        setUploading(false);
+        return;
+      }
+    }
 
     mutate(
-      { id, ...values, image: imageUrl, updatedAt },
+      {
+        id,
+        values: {
+          ...values,
+          image: imageUrl,
+        },
+      },
       {
         onSuccess: () => {
           message.success("Cập nhật sản phẩm thành công");
@@ -64,12 +82,11 @@ const FormeditSanPham: React.FC = () => {
         onError: () => {
           message.error("Cập nhật sản phẩm thất bại, vui lòng thử lại");
         },
+        onSettled: () => {
+          setUploading(false);
+        },
       }
     );
-  };
-
-  const handleChange = ({ fileList: newFileList }: { fileList: UploadFile[] }) => {
-    setFileList(newFileList);
   };
 
   if (isLoading) return <div>Đang tải dữ liệu sản phẩm...</div>;
@@ -122,9 +139,9 @@ const FormeditSanPham: React.FC = () => {
           name="category"
           rules={[{ required: true, message: "Vui lòng chọn danh mục" }]}
         >
-          <Select placeholder="Chọn danh mục" loading={loadingCategories}>
+          <Select placeholder="Chọn danh mục" loading={loading}>
             {categories
-              .filter((cat: { isDeleted?: boolean }) => !cat.isDeleted)
+              .filter((cat: { deleted?: boolean }) => !cat.deleted)
               .map((cat: { id: string; name: string }) => (
                 <Option key={cat.id} value={cat.id}>
                   {cat.name}
@@ -152,7 +169,11 @@ const FormeditSanPham: React.FC = () => {
           <InputNumber min={0} style={{ width: "100%" }} />
         </Form.Item>
 
-        <Form.Item label="Ảnh sản phẩm" name="image" rules={[{ required: true, message: "Vui lòng chọn ảnh sản phẩm" }]}>
+        <Form.Item
+          label="Ảnh sản phẩm"
+          name="image"
+          rules={[{ required: true, message: "Vui lòng chọn ảnh sản phẩm" }]}
+        >
           <Upload
             listType="picture-card"
             beforeUpload={() => false}
@@ -172,7 +193,7 @@ const FormeditSanPham: React.FC = () => {
 
         <Form.Item>
           <Space>
-            <Button type="primary" htmlType="submit" loading={isPending}>
+            <Button type="primary" htmlType="submit" loading={isPending || uploading}>
               Lưu thay đổi
             </Button>
             <Button onClick={() => navigate("/admin/products")}>Hủy</Button>

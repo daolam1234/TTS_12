@@ -15,11 +15,12 @@ id:number | null; // Optional for new products
   name: string;
   productName: string; 
   size:string;
-  
+  createdAt: string;
   description: string;
   price: number;
   category: string;
   status: string;
   stock: number;
-  image?: FileList | null; // Optional for file upload
+    image: string;
+ // Optional for file upload
 }

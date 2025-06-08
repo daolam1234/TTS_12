@@ -1,4 +1,4 @@
-import { Form, Input, InputNumber, Select, Button, message, Space, Upload } from "antd";
+import { Form, Input, InputNumber, Select, Button, Space, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useCreateProduct } from "@/hooks/useProducts";
@@ -7,6 +7,7 @@ import { useState } from "react";
 import type { UploadFile } from "antd/es/upload/interface";
 import dayjs from "dayjs";
 import { useList as useCategoryList } from "@/hooks/useCategory";
+import { uploadToCloudinary } from "@/utils/uploadToCloudinary"; // Đảm bảo bạn đã tạo hàm này
 
 const { Option } = Select;
 
@@ -15,30 +16,53 @@ const AddProduct: React.FC = () => {
   const navigate = useNavigate();
   const { mutate, isPending } = useCreateProduct();
   const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [uploading, setUploading] = useState(false);
+
   const { data: categories = [], isLoading: loadingCategories } = useCategoryList({ resource: "categories" });
 
-  const onFinish = (values: ProductFormValues) => {
-    // Lấy url ảnh đầu tiên (nếu có)
-    const imageUrl = fileList[0]?.url || fileList[0]?.thumbUrl || "";
-    // Thêm ngày tạo (createdAt) khi tạo thành công
-    const createdAt = dayjs().format("YYYY-MM-DD");
-    mutate(
-      { ...values, image: imageUrl, createdAt },
-      {
-        onSuccess: () => {
-          message.success("Thêm sản phẩm thành công");
-          navigate("/admin/products");
-        },
-        onError: () => {
-          message.error("Thêm sản phẩm thất bại, vui lòng thử lại");
-        },
+  const onFinish = async (values: ProductFormValues) => {
+    if (fileList.length === 0) {
+      message.error("Vui lòng chọn ảnh sản phẩm");
+      return;
+    }
+
+    setUploading(true);
+    try {
+      const file = fileList[0].originFileObj;
+      if (!file) {
+        message.error("Không tìm thấy file ảnh");
+        setUploading(false);
+        return;
       }
-    );
+
+      // Upload ảnh lên Cloudinary
+      const imageUrl = await uploadToCloudinary(file);
+
+      const createdAt = dayjs().format("YYYY-MM-DD");
+
+      mutate(
+        { ...values, image: imageUrl, createdAt },
+        {
+          onSuccess: () => {
+            message.success("Thêm sản phẩm thành công");
+            navigate("/admin/products");
+          },
+          onError: () => {
+            message.error("Thêm sản phẩm thất bại, vui lòng thử lại");
+          },
+          onSettled: () => {
+            setUploading(false);
+          },
+        }
+      );
+    } catch (error) {
+      message.error("Lỗi upload ảnh: " + (error as Error).message);
+      setUploading(false);
+    }
   };
 
-  // Xử lý khi upload ảnh (chỉ lấy ảnh local, không upload lên server)
   const handleChange = ({ fileList: newFileList }: { fileList: UploadFile[] }) => {
-    setFileList(newFileList);
+    setFileList(newFileList.slice(-1));
   };
 
   return (
@@ -131,7 +155,7 @@ const AddProduct: React.FC = () => {
         >
           <Upload
             listType="picture-card"
-            beforeUpload={() => false}
+            beforeUpload={() => false} // Ngăn upload tự động
             fileList={fileList}
             onChange={handleChange}
             maxCount={1}
@@ -148,7 +172,7 @@ const AddProduct: React.FC = () => {
 
         <Form.Item>
           <Space>
-            <Button type="primary" htmlType="submit" loading={isPending}>
+            <Button type="primary" htmlType="submit" loading={isPending || uploading}>
               Thêm sản phẩm
             </Button>
             <Button onClick={() => navigate("/admin/products")}>Hủy</Button>
