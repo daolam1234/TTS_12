@@ -20,12 +20,12 @@ export const getProductById = async (id: number | string) => {
 };
 
 // Cập nhật sản phẩm
-export const updateProduct = async ({ id, values }: { id: string | number; values: ProductFormValues }) => {
+export const updateProduct = async ({id,values,}: { id: string | number; values: Partial<ProductFormValues> }) => {
   const { data } = await instanceAxios.patch(`/products/${id}`, values);
   return data;
 };
 
 // Xóa mềm sản phẩm
 export const softDeleteProduct = async (id: number | string) => {
-  return updateProduct({ id, values: { deleted: true } });
+  return updateProduct({ id, values: { isDeleted: true } });
 };

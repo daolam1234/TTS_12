@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Table, Input, Select, Button, Space, Modal, Spin, Image } from "antd";
+import { Table, Input, Select, Button, Space, Modal, Spin, Image, Popconfirm } from "antd";
 import { Link } from "react-router-dom";
 import { useList, useSoftDeleteProduct } from "@/hooks/useProducts";
 import type { Product } from "@/types/product/product";
@@ -141,25 +141,32 @@ const ProductTable: React.FC = () => {
       align: "center" as const,
       width: 140,
     },
-    {
-      title: "Thao tác",
-      key: "actions",
-      align: "center" as const,
-      width: 180,
-      render: (_: unknown, record: Product) => (
-        <Space size="middle">
-          <Link to={`/admin/products/details/${record.id}`} className="text-yellow-600 hover:underline">
-            <i className="fas fa-eye mr-1" /> Xem
-          </Link>
-          <Button type="link" danger onClick={() => confirmDelete(record.id, record.name)}>
-            <i className="far fa-trash-alt mr-1" /> Xóa mềm
-          </Button>
-          <Link to={`/admin/products/edit/${record.id}`} className="text-blue-600 hover:underline">
-            <i className="fas fa-pencil-alt mr-1" /> Sửa
-          </Link>
-        </Space>
-      ),
-    },
+ {
+  title: "Thao tác",
+  key: "actions",
+  align: "center" as const,
+  width: 200,
+  render: (_: unknown, record: Product) => (
+    <Space>
+      <Link to={`/admin/products/details/${record.id}`}>
+        <Button type="default">Xem</Button>
+      </Link>
+
+      <Link to={`/admin/products/edit/${record.id}`}>
+        <Button type="primary">Sửa</Button>
+      </Link>
+
+      <Popconfirm
+        title="Bạn có chắc chắn muốn xóa?"
+        onConfirm={() => confirmDelete(record.id, record.name)}
+        okText="Xóa"
+        cancelText="Hủy"
+      >
+        <Button danger>Xóa</Button>
+      </Popconfirm>
+    </Space>
+  ),
+}
   ];
 
   if (isLoading) return <Spin size="large" className="m-10" />;

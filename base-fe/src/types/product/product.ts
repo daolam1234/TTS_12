@@ -22,5 +22,7 @@ id:number | null; // Optional for new products
   status: string;
   stock: number;
     image: string;
+  
+      isDeleted?: boolean;
  // Optional for file upload
 }
