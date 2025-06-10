@@ -1,35 +1,31 @@
-// src/pages/admin/Category.tsx
 
 import SizeTable from "@/components/admin/size/TableSize";
-import AdminLayout from "@/layouts/AdminLayout";
-import { useState } from "react";
-
-
+import { useSizes, useSoftDeleteSize } from "@/hooks/useSizes";
+import { Spin } from "antd";
 
 export default function SizeListPage() {
-    const [sizes] = useState([
-        { id: 1, name: "M", createdAt: "04/04/2025", updatedAt: "04/04/2025" },
-        { id: 2, name: "L", createdAt: "04/04/2025", updatedAt: "04/04/2025" },
-        { id: 3, name: "XL", createdAt: "04/04/2025", updatedAt: "04/04/2025" },
-        { id: 4, name: "29", createdAt: "04/04/2025", updatedAt: "04/04/2025" },
-        { id: 5, name: "30", createdAt: "04/04/2025", updatedAt: "04/04/2025" },
-        { id: 6, name: "31", createdAt: "04/04/2025", updatedAt: "04/04/2025" },
-      ]);
+  const { data: sizes, isLoading } = useSizes();
+  const { mutate: removeSize, isPending } = useSoftDeleteSize();
+
+  const handleDelete = (id: string | number) => {
+    removeSize(id);
+  };
 
   return (
-  
-      <div className="bg-white p-4 rounded shadow">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-semibold"> Quản lý biến thể</h2>
-         
-        </div>
-        <div className="mt-6 overflow-auto">
-            <SizeTable sizes={sizes} />
-        </div>
-      
+    <div className="bg-white p-4 rounded shadow">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-lg font-semibold">Quản lý kích cỡ</h2>
       </div>
 
-      
-    
+      {isLoading || isPending ? (
+        <div className="text-center py-10">
+          <Spin size="large" />
+        </div>
+      ) : (
+        <div className="mt-6 overflow-auto">
+          <SizeTable sizes={sizes || []} onDelete={handleDelete} />
+        </div>
+      )}
+    </div>
   );
 }

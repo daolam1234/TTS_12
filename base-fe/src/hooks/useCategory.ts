@@ -1,10 +1,14 @@
-
 import { getList, getOne, update, create,type Props } from "@/services/category";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { message } from "antd";
 
 import { useNavigate } from "react-router-dom";
 
+export interface CategoryFormValues {
+  name: string;
+  description?: string;
+ 
+}
 
 export const useList = ({ resource = "categories" }) => {
   return useQuery({
@@ -12,7 +16,6 @@ export const useList = ({ resource = "categories" }) => {
     queryFn: () => getList({ resource }),
   });
 };
-
 
 export const useOne = ({ resource = "categories", id }: Props) => {
   return useQuery({
@@ -22,10 +25,9 @@ export const useOne = ({ resource = "categories", id }: Props) => {
   });
 };
 
-
 export const useCreate = ({ resource = "categories" }) => {
   return useMutation({
-    mutationFn: (values: any) => create({ resource, values }),
+    mutationFn: (values: CategoryFormValues) => create({ resource, values }),
     onSuccess: () => {
       message.success("Thêm danh mục thành công!");
     },
@@ -35,14 +37,14 @@ export const useCreate = ({ resource = "categories" }) => {
   });
 };
 
-
 export const useUpdate = ({ resource = "categories" }) => {
   const nav = useNavigate();
   return useMutation({
-    mutationFn: ({ id, values }: { id: string; values: any }) => update({ resource, id, values }),
+    mutationFn: ({ id, values }: { id: string; values: CategoryFormValues }) =>
+      update({ resource, id, values }),
     onSuccess: () => {
       message.success("Cập nhật thành công");
-      nav("/admin/categorys"); 
+      nav("/admin/categorys");
     },
   });
 };

@@ -1,7 +1,7 @@
 export const uploadToCloudinary = async (file: File): Promise<string> => {
   const formData = new FormData();
   formData.append("file", file);
-  formData.append("upload_preset", "unsigned_preset"); // thay "your_unsigned_preset" đúng tên preset của bạn
+  formData.append("upload_preset", "unsigned_preset"); 
 
   const response = await fetch(
     `https://api.cloudinary.com/v1_1/diomg2vwr/image/upload`,
