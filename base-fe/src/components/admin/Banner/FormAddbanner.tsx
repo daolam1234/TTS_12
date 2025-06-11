@@ -20,7 +20,9 @@ const FormAddBanner = () => {
 
             const imageUrl = await uploadToCloudinary(file);
 
-            addBanner({ ...values, image: imageUrl });
+            // Chỉ gửi các trường cần thiết
+            const { title, mota } = values;
+            addBanner({ title, mota, image: imageUrl });
             form.resetFields();
         } catch (error) {
             console.error(error);

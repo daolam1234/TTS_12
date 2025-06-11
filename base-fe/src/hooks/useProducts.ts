@@ -15,7 +15,7 @@ export const useList = () => {
 export const useOneProduct = ({ id }: { id?: string }) => {
   return useQuery({
     queryKey: ["products", id],
-    queryFn: () => getProductById(id as string), // ép kiểu, đảm bảo id không undefined
+    queryFn: () => getProductById(id as string), 
     enabled: !!id,
   });
 };
@@ -27,7 +27,7 @@ export const useCreateProduct = () => {
   return useMutation({
     mutationFn: createProduct,
     onSuccess: () => {
-      message.success("Thêm sản phẩm thành công!");
+     
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },
     onError: () => {
@@ -43,7 +43,7 @@ export const useUpdateProduct = () => {
   return useMutation({
     mutationFn: updateProduct,
     onSuccess: () => {
-      message.success("Cập nhật sản phẩm thành công!");
+     
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },
     onError: () => {
@@ -59,7 +59,7 @@ export const useSoftDeleteProduct = () => {
   return useMutation({
     mutationFn: softDeleteProduct,
     onSuccess: () => {
-      message.success("Đã xóa mềm sản phẩm thành công");
+ 
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },
     onError: () => {
