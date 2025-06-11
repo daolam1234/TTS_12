@@ -2,13 +2,18 @@ import React, { useState } from "react";
 import { Table, Input, Select, Button, Space, Modal, Spin, Image, Popconfirm } from "antd";
 import { Link } from "react-router-dom";
 import { useList, useSoftDeleteProduct } from "@/hooks/useProducts";
+import { useList as useListCategory } from "@/hooks/useCategory";
 import type { Product } from "@/types/product/product";
+import type { CategoryFormValues } from "@/types/categorys/category";
+
+
 
 const { Option } = Select;
 const itemsPerPage = 5;
 
 const ProductTable: React.FC = () => {
   const { data: products = [], isLoading } = useList();
+  const { data: categories = [] } = useListCategory({}); // Lấy danh mục thật
   const softDeleteMutation = useSoftDeleteProduct();
 
   const [searchName, setSearchName] = useState("");
@@ -104,6 +109,10 @@ const ProductTable: React.FC = () => {
       key: "category",
       align: "center" as const,
       width: 100,
+      render: (categoryId: string) => {
+        const category = categories.find((c: CategoryFormValues) => c.id === categoryId);
+        return category ? category.name : categoryId;
+      },
     },
     {
       title: "Trạng thái",
@@ -141,32 +150,32 @@ const ProductTable: React.FC = () => {
       align: "center" as const,
       width: 140,
     },
- {
-  title: "Thao tác",
-  key: "actions",
-  align: "center" as const,
-  width: 200,
-  render: (_: unknown, record: Product) => (
-    <Space>
-      <Link to={`/admin/products/details/${record.id}`}>
-        <Button type="default">Xem</Button>
-      </Link>
+    {
+      title: "Thao tác",
+      key: "actions",
+      align: "center" as const,
+      width: 200,
+      render: (_: unknown, record: Product) => (
+        <Space>
+          <Link to={`/admin/products/details/${record.id}`}>
+            <Button type="default">Xem</Button>
+          </Link>
 
-      <Link to={`/admin/products/edit/${record.id}`}>
-        <Button type="primary">Sửa</Button>
-      </Link>
+          <Link to={`/admin/products/edit/${record.id}`}>
+            <Button type="primary">Sửa</Button>
+          </Link>
 
-      <Popconfirm
-        title="Bạn có chắc chắn muốn xóa?"
-        onConfirm={() => confirmDelete(record.id, record.name)}
-        okText="Xóa"
-        cancelText="Hủy"
-      >
-        <Button danger>Xóa</Button>
-      </Popconfirm>
-    </Space>
-  ),
-}
+          <Popconfirm
+            title="Bạn có chắc chắn muốn xóa?"
+            onConfirm={() => confirmDelete(record.id, record.name)}
+            okText="Xóa"
+            cancelText="Hủy"
+          >
+            <Button danger>Xóa</Button>
+          </Popconfirm>
+        </Space>
+      ),
+    },
   ];
 
   if (isLoading) return <Spin size="large" className="m-10" />;
@@ -200,10 +209,11 @@ const ProductTable: React.FC = () => {
           placeholder="Chọn danh mục"
         >
           <Option value="">Tất cả danh mục</Option>
-          <Option value="Áo">Áo</Option>
-          <Option value="Quần">Quần</Option>
-          <Option value="Phụ kiện">Phụ kiện</Option>
-          {/* Thêm danh mục khác nếu có */}
+          {categories.map((cat: CategoryFormValues  ) => (
+            <Option key={cat.id} value={cat.id}>
+              {cat.name}
+            </Option>
+          ))}
         </Select>
       </div>
 
