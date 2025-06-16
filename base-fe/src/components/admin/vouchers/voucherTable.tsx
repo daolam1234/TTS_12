@@ -1,4 +1,4 @@
-import { Table, Button, Popconfirm, Tag, Switch } from 'antd';
+import { Table, Button, Popconfirm, Tag,  } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { format } from 'date-fns';
 import { PlusOutlined } from '@ant-design/icons';
@@ -11,7 +11,7 @@ interface VoucherTableProps {
   onToggleStatus?: (id: string, checked: boolean) => void; // 👈 Thêm
 }
 
-const VoucherTable: React.FC<VoucherTableProps> = ({ data, onEdit, onToggleStatus }) => {
+const VoucherTable: React.FC<VoucherTableProps> = ({ data, onEdit,  }) => {
   const columns: ColumnsType<Voucher> = [
     {
       title: '#',
@@ -75,18 +75,7 @@ const VoucherTable: React.FC<VoucherTableProps> = ({ data, onEdit, onToggleStatu
       key: 'endDate',
       render: (date: string) => format(new Date(date), 'Pp'),
     },
-    {
-      title: 'Ngày tạo',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
-      render: (date: string) => format(new Date(date), 'Pp'),
-    },
-    {
-      title: 'Ngày sửa',
-      dataIndex: 'updatedAt',
-      key: 'updatedAt',
-      render: (date: string) => format(new Date(date), 'Pp'),
-    },
+  
     {
       title: 'Hành động',
       key: 'actions',

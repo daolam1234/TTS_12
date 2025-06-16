@@ -1,12 +1,9 @@
 export interface Size {
-  id: number | string;
+  id: number;
   name: string;
-  createdAt: string;
-  updatedAt: string;
-  isDeleted?: boolean;
-}
-
-export interface SizeFormValues {
-  name: string;
-  isDeleted?: boolean;
+  description?: string;
+  isDeleted: boolean; // true nếu đã xóa mềm, false nếu chưa xóa
+  status: string; // "active" | "isDeleted"
+  createdAt?: string;
+  updatedAt?: string;
 }

@@ -2,16 +2,16 @@ import React from "react";
 import { Button, Form, Input } from "antd";
 
 interface FormAddSizeProps {
-  onSubmit: (values: { name: string }) => void;
+  onSubmit: (values: { name: string; description?: string; status: string }) => void;
   loading?: boolean;
 }
 
 const FormAddSize: React.FC<FormAddSizeProps> = ({ onSubmit, loading }) => {
   const [form] = Form.useForm();
 
-  const handleFinish = (values: { name: string }) => {
-    onSubmit(values);
-    form.resetFields(); // Optional: reset form sau khi thêm
+  const handleFinish = (values: { name: string; description?: string }) => {
+    onSubmit({ ...values, status: "active" }); // Thêm status mặc định
+    form.resetFields();
   };
 
   return (
@@ -29,7 +29,12 @@ const FormAddSize: React.FC<FormAddSizeProps> = ({ onSubmit, loading }) => {
         >
           <Input placeholder="VD: S, M, L, XL..." />
         </Form.Item>
-
+        <Form.Item
+          label="Mô tả"
+          name="description"
+        >
+          <Input placeholder="Nhập mô tả (nếu có)" />
+        </Form.Item>
         <Form.Item className="text-right">
           <Button
             htmlType="submit"
