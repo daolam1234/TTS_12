@@ -92,18 +92,30 @@
       "name": "S",
       "id": 2,
       "isDeleted": true
+    },
+    {
+      "name": "ww",
+      "id": 3,
+      "description": "efwse",
+      "status": "inactive",
+      "isDeleted": true
+    },
+    {
+      "name": "L",
+      "description": "nhỏ ",
+      "status": "active",
+      "id": 4,
+      "isDeleted": true
     }
   ],
   "orders": [],
   "banners": [
-  
     {
       "title": "aa",
       "image": "https://res.cloudinary.com/diomg2vwr/image/upload/v1749536326/chztjkwtzhl2pu1ueqb9.jpg",
       "mota": "aaaa",
       "id": 2
     },
-   
     {
       "title": "gg",
       "mota": "ygy",

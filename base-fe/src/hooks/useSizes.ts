@@ -7,6 +7,7 @@ import {
 } from "@/services/Size";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { message } from "antd";
+import { useNavigate } from "react-router-dom";
 
 // Danh sách
 export const useSizes = () => {
@@ -27,12 +28,14 @@ export const useOneSize = ({ id }: { id?: string }) => {
 
 // Thêm
 export const useCreateSize = () => {
+  const nav =useNavigate();
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: createSize,
     onSuccess: () => {
       message.success("Thêm kích cỡ thành công!");
       queryClient.invalidateQueries({ queryKey: ["sizes"] });
+      nav("/admin/size");
     },
     onError: () => {
       message.error("Thêm kích cỡ thất bại!");
@@ -66,6 +69,6 @@ export const useSoftDeleteSize = () => {
     },
     onError: () => {
       message.error("Xoá kích cỡ thất bại!");
-    },
+    },  
   });
 };
