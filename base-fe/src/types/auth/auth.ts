@@ -1,3 +1,24 @@
+export interface Account {
+  _id: string;
+  fullName: string;
+  email: string;
+  password?: string;
+  phone?: string;
+  avatar?: string;
+  token?: string;
+  role_id?: string;
+  status?: string;
+  gender?: "male" | "female" | "other";
+  birthday?: string;
+  address?: string;
+  admin: boolean;
+  deleted?: boolean;
+  deletedAt?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+
 export interface LoginPayload {
   email: string;
   password: string;
@@ -14,11 +35,8 @@ export interface FormValues {
 }
 
 export interface LoginResponse {
-  token: string;
-    role: 'admin' | 'user';
-  user: {
-    id: string;
-    name: string;
-    email: string;
-  };
+  accessToken: string;
+  refreshToken?: string;
+  account: Account;
 }
+

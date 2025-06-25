@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { Row, Col, Form, Input, Button, Typography, message } from "antd";
 import type { FormValues } from "@/types/auth/auth";
 import { useAuth } from "@/hooks/useAuth";
-import { toast } from "react-toastify";
+
 
 const { Text } = Typography;
 
@@ -68,8 +68,8 @@ export default function Login() {
             />
           </Form.Item>
 
-          <Button type="primary" htmlType="submit" block loading={loginMutation.isLoading}>
-            {loginMutation.isLoading ? "Đang đăng nhập..." : "Đăng nhập"}
+          <Button type="primary" htmlType="submit" block loading={loginMutation.isPending}>
+            {loginMutation.isPending ? "Đang đăng nhập..." : "Đăng nhập"}
           </Button>
         </Form>
 

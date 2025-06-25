@@ -1,9 +1,11 @@
+import { RouterProvider } from "react-router-dom"
+import { adminRouter } from "./router/AdminRouter"
 
-import { useRoutes } from "react-router-dom";
-import { adminRouter } from "./router/AdminRouter";
 
 function App() {
-  const routes = useRoutes([adminRouter]); 
-  return routes;
+  return (
+    <RouterProvider router={adminRouter} />
+  )
 }
-export default App;
+
+export default App
