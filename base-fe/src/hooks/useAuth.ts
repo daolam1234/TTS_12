@@ -14,6 +14,8 @@ export const useAuth = ({ resource }: Props) => {
     mutationFn: (values: any) => auth({ resource, values }),
     onSuccess: (response) => {
       const { accessToken, account } = response.data;
+      console.log(response);
+      
       const role = account.admin ? "admin" : "user";
       localStorage.setItem("token", accessToken);
       localStorage.setItem("user", JSON.stringify(account));

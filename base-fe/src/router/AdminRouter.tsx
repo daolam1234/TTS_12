@@ -21,60 +21,54 @@ import ListAccountPage from "@/pages/account/ListAdminAccount";
 import AddAdminPage from "@/pages/account/AddAdminAccountPage";
 import ListAccountUsePage from "@/pages/account/ListUserAccountPage";
 
-import { useAuthContext } from "@/hooks/useAuthContext";
-import type { ReactNode } from "react";
 import Login from "@/pages/auth/login";
 
-// Component bảo vệ route admin
-function AdminPrivateRoute({ children }: { children?: ReactNode }) {
-  const { isAuthenticated, user } = useAuthContext();
 
-  if (!isAuthenticated) {
-    return <Navigate to="/auth/login" replace />;
+const AdminRoute = () => {
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
+
+  if (token && role === "admin") {
+    return <Outlet />;
   }
-
-  if (!user?.admin) {
-    return <Navigate to="/" replace />;
-  }
-
-  return children ? <>{children}</> : <Outlet />;
-}
+  return <Navigate to="/auth/login" replace />;
+};
 
 // 👉 Export adminRouter
 export const adminRouter = createBrowserRouter([
   {
     path: "/",
+    children: [{ path: "auth/login", element: <Login /> }],
+  },
+  {
+    path: "/admin",
+    element: <AdminLayout />, // 👉 Đây là layout chính
     children: [
-      { path: "auth/login", element: <Login /> },
+      {
+        element: <AdminRoute />, // 👉 Route guard kiểm tra quyền
+        children: [
+          { index: true, element: <Homeadmin /> },
+          { path: "categorys", element: <Category /> },
+          { path: "categorys/edit/:id", element: <EditCategoryPage /> },
+          { path: "products", element: <QuanLySanPham /> },
+          { path: "products/add", element: <AddSanPham /> },
+          { path: "products/edit/:id", element: <EditSanPham /> },
+          { path: "products/details/:id", element: <ProductDetailPage /> },
+          { path: "voucher", element: <VouchersPage /> },
+          { path: "voucher/add", element: <VoucherFormPage /> },
+          { path: "size", element: <SizeListPage /> },
+          { path: "size/add", element: <SizeAddPage /> },
+          { path: "size/edit/:id", element: <SizeEditPage /> },
+          { path: "banners", element: <BannerListPage /> },
+          { path: "banners/add", element: <BannerAddPage /> },
+          { path: "banners/edit/:id", element: <BannerEditPage /> },
+          { path: "comments", element: <CommentList /> },
+          { path: "account_admin", element: <ListAccountPage /> },
+          { path: "account_admin/add", element: <AddAdminPage /> },
+          { path: "account_user", element: <ListAccountUsePage /> },
+        ],
+      },
     ],
   },
-{
-  path: "/admin",
-  element: (
-    <AdminPrivateRoute>
-      <AdminLayout />
-    </AdminPrivateRoute>
-  ),
-  children: [
-    { index: true, element: <Homeadmin /> },
-    { path: "categorys", element: <Category /> },
-    { path: "categorys/edit/:id", element: <EditCategoryPage /> },
-    { path: "products", element: <QuanLySanPham /> },
-    { path: "products/add", element: <AddSanPham /> },
-    { path: "products/edit/:id", element: <EditSanPham /> },
-    { path: "products/details/:id", element: <ProductDetailPage /> },
-    { path: "voucher", element: <VouchersPage /> },
-    { path: "voucher/add", element: <VoucherFormPage /> },
-    { path: "size", element: <SizeListPage /> },
-    { path: "size/add", element: <SizeAddPage /> },
-    { path: "size/edit/:id", element: <SizeEditPage /> },
-    { path: "banners", element: <BannerListPage /> },
-    { path: "banners/add", element: <BannerAddPage /> },
-    { path: "banners/edit/:id", element: <BannerEditPage /> },
-    { path: "comments", element: <CommentList /> },
-    { path: "account_admin", element: <ListAccountPage /> },
-    { path: "account_admin/add", element: <AddAdminPage /> },
-    { path: "account_user", element: <ListAccountUsePage /> },
-  ],
-},
 ]);
+
