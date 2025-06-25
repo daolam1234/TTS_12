@@ -20,31 +20,41 @@ import SizeEditPage from "@/pages/size/EditSize";
 import BannerListPage from "@/pages/banner/BannerList";
 import BannerAddPage from "@/pages/banner/BannerAdd";
 import BannerEditPage from "@/pages/banner/BannerEdit";
+import PrivateRoute from "@/components/PrivateRoute";
+
+
+  
+
+
 
 
 export const adminRouter: RouteObject = {
-    path: "/admin", 
-    element: <AdminLayout />,
-    children: [
+  path: "/admin",
+  element: <PrivateRoute />,
+  children: [
+    {
+      element: <AdminLayout />,
+      children: [
         { index: true, element: <Homeadmin /> },
-      { path: "categorys", element: <Category /> },
-      { path: "categorys/edit/:id", element: <EditCategoryPage /> },
-      { path: "products", element: <QuanLySanPham /> },
-      { path: "banners", element: <BannerListPage /> },
-      { path: "banners/add", element: <BannerAddPage /> },
-      { path: "banners/edit/:id", element: <BannerEditPage /> },
-      { path: "products/add", element: <AddSanPham /> },
-      { path: "products/edit/:id", element: <EditSanPham /> },
-      { path: "products/details/:id", element: <ProductDetailPage /> },
-      { path: "voucher", element: <VouchersPage /> },
-      { path: "voucher/add", element: <VoucherFormPage /> },
-      { path: "size", element: <SizeListPage /> },
-      { path: "size/add", element: <SizeAddPage /> },
-      { path: "size/edit/:id", element: <SizeEditPage /> },
-      { path: "comments", element: <CommentList /> },
-      { path: "account_admin", element: <ListAccountPage /> },
-      { path: "account_admin/add", element: <AddAdminPage /> },
-      { path: "account_user", element: <ListAccountUsePage /> },
-    ],
-  };
-  
+        { path: "categorys", element: <Category /> },
+        { path: "categorys/edit/:id", element: <EditCategoryPage /> },
+        { path: "products", element: <QuanLySanPham /> },
+        { path: "banners", element: <BannerListPage /> },
+        { path: "banners/add", element: <BannerAddPage /> },
+        { path: "banners/edit/:id", element: <BannerEditPage /> },
+        { path: "products/add", element: <AddSanPham /> },
+        { path: "products/edit/:id", element: <EditSanPham /> },
+        { path: "products/details/:id", element: <ProductDetailPage /> },
+        { path: "voucher", element: <VouchersPage /> },
+        { path: "voucher/add", element: <VoucherFormPage /> },
+        { path: "size", element: <SizeListPage /> },
+        { path: "size/add", element: <SizeAddPage /> },
+        { path: "size/edit/:id", element: <SizeEditPage /> },
+        { path: "comments", element: <CommentList /> },
+        { path: "account_admin", element: <ListAccountPage /> },
+        { path: "account_admin/add", element: <AddAdminPage /> },
+        { path: "account_user", element: <ListAccountUsePage /> },
+      ],
+    },
+  ],
+};
