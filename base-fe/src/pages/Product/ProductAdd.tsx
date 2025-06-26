@@ -1,10 +1,5 @@
 // src/pages/admin/Category.tsx
-
-import FormAddSanPham from "@/components/admin/Product/FormAdd";
-
-
-
-
+import React from "react";
 
 export default function AddSanPham() {
 
@@ -16,7 +11,7 @@ export default function AddSanPham() {
           <h2 className="text-lg font-semibold">Thêm sản phẩm</h2>
          
         </div>
-        <FormAddSanPham />
+      
       </div>
 
       

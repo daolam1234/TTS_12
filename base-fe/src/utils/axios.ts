@@ -3,10 +3,10 @@ import { toast } from "react-toastify";
 
 
 const instanceAxios = axios.create({
-  baseURL: "http://localhost:8888/api",
-   headers: {
+  baseURL: "http://localhost:8888/api", // phải đúng với route Node.js
+  headers: {
     "Content-Type": "application/json",
-  }
+  },
 })
 
 

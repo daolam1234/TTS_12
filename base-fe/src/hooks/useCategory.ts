@@ -1,50 +1,35 @@
-import { getList, getOne, update, create,type Props } from "@/services/category";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { message } from "antd";
+// hooks/useCategory.ts
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import instanceAxios from "@/utils/axios"
+import { categoryService } from "@/services/category"
+import { message } from "antd"
 
-import { useNavigate } from "react-router-dom";
-
-export interface CategoryFormValues {
-  name: string;
-  description?: string;
- 
+export const useCategoryList = () => {
+  return useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const res = await instanceAxios.get("/categories")
+      return res.data.data.categories // CHÍNH XÁC: phải là .categories
+    },
+  })
 }
+export const useCreateCategory = () => {
+  const queryClient = useQueryClient()
 
-export const useList = ({ resource = "categories" }) => {
-  return useQuery({
-    queryKey: [resource],
-    queryFn: () => getList({ resource }),
-  });
-};
-
-export const useOne = ({ resource = "categories", id }: Props) => {
-  return useQuery({
-    queryKey: [resource, id],
-    queryFn: () => getOne({ resource, id }),
-    enabled: !!id,
-  });
-};
-
-export const useCreate = ({ resource = "categories" }) => {
   return useMutation({
-    mutationFn: (values: CategoryFormValues) => create({ resource, values }),
+    mutationFn: categoryService.create,
     onSuccess: () => {
-      message.success("Thêm danh mục thành công!");
+      message.success("Thêm danh mục thành công")
+      queryClient.invalidateQueries({ queryKey: ["categories"] })
     },
     onError: () => {
-      message.error("Thêm danh mục thất bại!");
+      message.error("Thêm danh mục thất bại")
     },
-  });
-};
-
-export const useUpdate = ({ resource = "categories" }) => {
-  const nav = useNavigate();
-  return useMutation({
-    mutationFn: ({ id, values }: { id: string; values: CategoryFormValues }) =>
-      update({ resource, id, values }),
-    onSuccess: () => {
-      message.success("Cập nhật thành công");
-      nav("/admin/categorys");
-    },
-  });
-};
+  })
+}
+export const useDeletedCategoryList = () => {
+  return useQuery({
+    queryKey: ["deleted-categories"],
+    queryFn: categoryService.getDeleted,
+  })
+}

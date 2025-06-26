@@ -1,5 +1,6 @@
 
-import ProductTable from "@/components/admin/Product/TableProduct";
+import React from "react";
+
 export default function QuanLySanPham() {
   return (
       <div className="bg-white p-4 rounded shadow">
@@ -7,7 +8,7 @@ export default function QuanLySanPham() {
           <h2 className="text-lg font-semibold"> Quản lý sản phẩm</h2>    
         </div>
         <div className="mt-6 overflow-auto">
-           <ProductTable />
+          
         </div>
        
       </div>

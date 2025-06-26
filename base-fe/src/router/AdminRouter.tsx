@@ -1,9 +1,11 @@
+import React from "react";
+
 import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
 import AdminLayout from "@/layouts/AdminLayout";
 
 import Homeadmin from "@/pages/home";
 import Category from "@/pages/Category/category";
-import EditCategoryPage from "@/pages/Category/edit";
+
 import QuanLySanPham from "@/pages/Product/ProductList";
 import AddSanPham from "@/pages/Product/ProductAdd";
 import EditSanPham from "@/pages/Product/ProductEdit";
@@ -22,6 +24,9 @@ import AddAdminPage from "@/pages/account/AddAdminAccountPage";
 import ListAccountUsePage from "@/pages/account/ListUserAccountPage";
 
 import Login from "@/pages/auth/login";
+import AddCategoryPage from "@/pages/Category/formadd";
+import DeletedCategoryPage from "@/pages/Category/DeletedCategoryPage";
+import EditCategoryPage from "@/pages/Category/edit";
 
 
 const AdminRoute = () => {
@@ -49,7 +54,9 @@ export const adminRouter = createBrowserRouter([
         children: [
           { index: true, element: <Homeadmin /> },
           { path: "categorys", element: <Category /> },
+          { path: "categorys/add", element: <AddCategoryPage /> },
           { path: "categorys/edit/:id", element: <EditCategoryPage /> },
+          { path: "categorys/deleted", element: <DeletedCategoryPage /> },
           { path: "products", element: <QuanLySanPham /> },
           { path: "products/add", element: <AddSanPham /> },
           { path: "products/edit/:id", element: <EditSanPham /> },

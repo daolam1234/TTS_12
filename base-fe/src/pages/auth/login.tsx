@@ -1,6 +1,6 @@
 import { useForm, Controller } from "react-hook-form";
-import { useNavigate, Link } from "react-router-dom";
-import { Row, Col, Form, Input, Button, Typography, message } from "antd";
+import {  Link } from "react-router-dom";
+import { Row, Col, Form, Input, Button, Typography,  } from "antd";
 import type { FormValues } from "@/types/auth/auth";
 import { useAuth } from "@/hooks/useAuth";
 

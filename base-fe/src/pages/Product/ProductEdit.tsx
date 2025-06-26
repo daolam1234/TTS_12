@@ -1,6 +1,5 @@
-import FormeditSanPham from "@/components/admin/Product/FormEdit";
 
-
+import React from "react";
 
 
 
@@ -14,7 +13,7 @@ export default function EditSanPham() {
           <h2 className="text-lg font-semibold">Thêm sản phẩm</h2>
          
         </div>
-        <FormeditSanPham />
+
       </div>
 
       
