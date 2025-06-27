@@ -27,6 +27,7 @@ import Login from "@/pages/auth/login";
 import AddCategoryPage from "@/pages/Category/formadd";
 import DeletedCategoryPage from "@/pages/Category/DeletedCategoryPage";
 import EditCategoryPage from "@/pages/Category/edit";
+import ProductDeletedList from "@/pages/Product/ProductDeletedList";
 
 
 const AdminRoute = () => {
@@ -59,6 +60,7 @@ export const adminRouter = createBrowserRouter([
           { path: "categorys/deleted", element: <DeletedCategoryPage /> },
           { path: "products", element: <QuanLySanPham /> },
           { path: "products/add", element: <AddSanPham /> },
+          { path: "products/deleted", element: <ProductDeletedList /> },
           { path: "products/edit/:id", element: <EditSanPham /> },
           { path: "products/details/:id", element: <ProductDetailPage /> },
           { path: "voucher", element: <VouchersPage /> },
