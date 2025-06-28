@@ -52,6 +52,15 @@ export default function Sidebar() {
         <Link to="/admin/products">Quản lý sản phẩm</Link>
       </Menu.Item>
 
+        <Menu.Item key="admin-account" icon={<UserOutlined />}>
+          <Link to="/admin/account">tài khoản </Link>
+        </Menu.Item>
+        
+      
+
+      <Menu.Item key="order" icon={<PictureOutlined />}>
+        <Link to="/admin/order">Quản lý đơn hàng</Link>
+      </Menu.Item>
       <Menu.Item key="banners" icon={<PictureOutlined />}>
         <Link to="/admin/banners">Quản lý banner</Link>
       </Menu.Item>
@@ -65,20 +74,10 @@ export default function Sidebar() {
       </Menu.Item>
 
       <Menu.Item key="Voucher" icon={<TagOutlined />}>
-        <Link to="/admin/Voucher">Quản lý mã giảm giá</Link>
+        <Link to="/admin/shipping">Quản lý phương thức vận chuyển</Link>
       </Menu.Item>
-      <Menu.Item key="comments" icon={<CommentOutlined />}>
-        <Link to="/admin/comments">Quản lý bình luận</Link>
-      </Menu.Item>
+
       
-      <SubMenu key="account" icon={<UserOutlined />} title="Tài khoản">
-        <Menu.Item key="admin-account">
-          <Link to="/admin/account_admin">Admin</Link>
-        </Menu.Item>
-        <Menu.Item key="customer-account">
-          <Link to="/admin/account_user">Khách hàng</Link>
-        </Menu.Item>
-      </SubMenu>
 
      
     </Menu>

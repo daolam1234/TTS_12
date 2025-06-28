@@ -11,10 +11,8 @@ const ListAccountPage = () => {
   return (
   
       <div className="p-4 bg-white rounded shadow">
-        <h1 className="text-xl font-semibold mb-4">DANH SÁCH ADMIN</h1>
-        <Button type="primary" className="mb-4" onClick={() => navigate('/admin/account_admin/add')}>
-          Thêm mới tài khoản
-        </Button>
+        <h1 className="text-xl font-semibold mb-4">DANH SÁCH TÀI KHOẢN </h1>
+       
       <AccountAdminTable />
       </div>
     

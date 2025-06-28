@@ -1,31 +1,29 @@
-import type { BannerFormValues } from "@/types/banner/banner";
+// src/services/bannerService.ts
 import instanceAxios from "@/utils/axios";
 
-// Tạo banner mới
-export const createBanner = async (values: BannerFormValues) => {
-  const { data } = await instanceAxios.post("/banners", values);
-  return data;
-};
-
-// Lấy danh sách banner
-export const getBanners = async () => {
-  const { data } = await instanceAxios.get("/banners");
-  return data;
-};
-
-// Lấy 1 banner
-export const getBannerById = async (id: string | number) => {
-  const { data } = await instanceAxios.get(`/banners/${id}`);
-  return data;
-};
-
-// Cập nhật banner
-export const updateBanner = async ({ id, values }: { id: string | number, values: Partial<BannerFormValues> }) => {
-  const { data } = await instanceAxios.patch(`/banners/${id}`, values);
-  return data;
-};
-
-// Xoá mềm banner
-export const softDeleteBanner = async (id: string | number) => {
-  return updateBanner({ id, values: { isDeleted: true } });
+export const bannerService = {
+  getAll: async (params?: Record<string, any>) => {
+    const res = await instanceAxios.get("/banners", { params });
+    return res.data?.data || [];
+  },
+  getById: async (id: string) => {
+    const res = await instanceAxios.get(`/banners/${id}`);
+    return res.data?.data;
+  },
+  create: async (data: FormData) => {
+    const res = await instanceAxios.post("/banners", data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    return res.data?.data;
+  },
+  update: async (id: string, data: FormData) => {
+    const res = await instanceAxios.patch(`/banners/${id}`, data, {
+        headers: { "Content-Type": "multipart/form-data" },
+    });
+    return res.data?.data;
+},
+  delete: async (id: string) => {
+    const res = await instanceAxios.delete(`/banners/${id}`);
+    return res.data?.data;
+  },
 };

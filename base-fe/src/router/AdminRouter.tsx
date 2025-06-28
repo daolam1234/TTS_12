@@ -17,17 +17,21 @@ import SizeAddPage from "@/pages/size/AddSize";
 import SizeEditPage from "@/pages/size/EditSize";
 import BannerListPage from "@/pages/banner/BannerList";
 import BannerAddPage from "@/pages/banner/BannerAdd";
-import BannerEditPage from "@/pages/banner/BannerEdit";
+
 import CommentList from "@/pages/comment/CommentList";
 import ListAccountPage from "@/pages/account/ListAdminAccount";
-import AddAdminPage from "@/pages/account/AddAdminAccountPage";
-import ListAccountUsePage from "@/pages/account/ListUserAccountPage";
+
 
 import Login from "@/pages/auth/login";
 import AddCategoryPage from "@/pages/Category/formadd";
 import DeletedCategoryPage from "@/pages/Category/DeletedCategoryPage";
 import EditCategoryPage from "@/pages/Category/edit";
 import ProductDeletedList from "@/pages/Product/ProductDeletedList";
+import OrderListPage from "@/pages/order/OrderListPage";
+import BannerEditPage from "@/pages/banner/BannerEdit";
+import ShippingMethodListPage from "@/pages/ShippingMethod/ShippingMethodListPage";
+import OrderDetailPage from "@/pages/order/OrderDetailPage";
+
 
 
 const AdminRoute = () => {
@@ -64,6 +68,9 @@ export const adminRouter = createBrowserRouter([
           { path: "products/edit/:id", element: <EditSanPham /> },
           { path: "products/details/:id", element: <ProductDetailPage /> },
           { path: "voucher", element: <VouchersPage /> },
+          { path: "order", element: <OrderListPage /> },
+          { path: "orders/:id", element: <OrderDetailPage /> },
+      
           { path: "voucher/add", element: <VoucherFormPage /> },
           { path: "size", element: <SizeListPage /> },
           { path: "size/add", element: <SizeAddPage /> },
@@ -71,10 +78,11 @@ export const adminRouter = createBrowserRouter([
           { path: "banners", element: <BannerListPage /> },
           { path: "banners/add", element: <BannerAddPage /> },
           { path: "banners/edit/:id", element: <BannerEditPage /> },
+        
           { path: "comments", element: <CommentList /> },
-          { path: "account_admin", element: <ListAccountPage /> },
-          { path: "account_admin/add", element: <AddAdminPage /> },
-          { path: "account_user", element: <ListAccountUsePage /> },
+          { path: "account", element: <ListAccountPage /> },
+          { path: "shipping", element: <ShippingMethodListPage /> },
+       
         ],
       },
     ],

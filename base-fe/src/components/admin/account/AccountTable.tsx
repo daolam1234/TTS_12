@@ -1,74 +1,58 @@
-// src/components/admin/AdminTable.tsx
-import { Button, Table, Tag } from 'antd';
-import React from 'react';
+import React from "react";
+import { Table, Button, Popconfirm, Tag } from "antd";
+import { useAccountList, useDeleteAccount } from "@/hooks/useAccout";
 
-import { EllipsisOutlined } from '@ant-design/icons';
-const data = [
-  {
-    key: '1',
-    name: 'Hà Thị Quỳnh PH47250',
-    email: 'quynhthph47250@fpt.edu.vn',
-    sdt:"040340304",
-    dia_chi:"hà nội",
-    status: 'Hoạt động',
-    activated: 'Đã kích hoạt',
-    updatedAt: '03/04/2025 20:50:42',
-  },
-];
+const ListAccountPage = () => {
+  const { data: accounts, isLoading } = useAccountList();
+  const deleteAccount = useDeleteAccount();
 
-const AccountUseTable = () => {
   const columns = [
+    { title: "Tên", dataIndex: "fullName" },
+    { title: "Email", dataIndex: "email" },
+    { title: "Giới tính", dataIndex: "gender" },
     {
-      title: 'Tên',
-      dataIndex: 'name',
-      key: 'name',
-    },
-    {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
-    },
-    {
-      title: 'sdt',
-      dataIndex: 'sdt',
-      key: 'sdt',
-    },
-    {
-      title: 'dia_chi',
-      dataIndex: 'dia_chi',
-      key: 'dia_chi',
-    },
-    {
-      title: 'Trạng thái',
-      dataIndex: 'status',
-      key: 'status',
-      render: (status: string) => (
-        <Tag color={status === 'Hoạt động' ? 'green' : 'red'}>
-          {status}
+      title: "Vai trò",
+      dataIndex: "admin",
+      render: (admin: boolean) => (
+        <Tag color={admin ? "blue" : "default"}>
+          {admin ? "Admin" : "User"}
         </Tag>
       ),
     },
+    { 
+      title: "Trạng thái", 
+      render: (_: any, record: any) => (
+        <Tag color={!record.deleted ? "green" : "red"}>
+          {!record.deleted ? "Đang hoạt động" : "Đã xóa"}
+        </Tag>
+      )
+    },
     {
-      title: 'Kích hoạt',
-      dataIndex: 'activated',
-      key: 'activated',
-      render: (activated: string) => (
-        <Tag color="green">{activated}</Tag>
+      title: "Hành động",
+      render: (_: any, record: any) => (
+        <>
+          <Popconfirm
+            title="Bạn chắc chắn muốn xóa?"
+            onConfirm={() => deleteAccount.mutate(record._id)}
+          >
+            <Button danger size="small">Xóa</Button>
+          </Popconfirm>
+        </>
       ),
-    },
-    {
-      title: 'Ngày sửa cuối',
-      dataIndex: 'updatedAt',
-      key: 'updatedAt',
-    },
-    {
-      title: 'Chức năng',
-      key: 'action',
-      render: (_: any, record: any) =>   <Button icon={<EllipsisOutlined />} />,
     },
   ];
 
-  return <Table columns={columns} dataSource={data} pagination={{ pageSize: 5 }} />;
+  return (
+    <div>
+      <h2>Quản lý tài khoản</h2>
+      <Table
+        loading={isLoading}
+        columns={columns}
+        dataSource={accounts}
+        rowKey="_id"
+      />
+    </div>
+  );
 };
 
-export default AccountUseTable;
+export default ListAccountPage;
