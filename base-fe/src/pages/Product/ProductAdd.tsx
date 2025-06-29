@@ -16,15 +16,16 @@ import { useNavigate } from "react-router-dom";
 import { useCategoryList } from "@/hooks/useCategory";
 import { useCreateProduct } from "@/hooks/useProducts";
 import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
+import type { ProductFormValues } from "@/types/product/product";
 
 const { TextArea } = Input;
 
 export default function ProductAddForm() {
   const { data: categories = [] } = useCategoryList();
-  const { mutateAsync, isLoading } = useCreateProduct();
+  const { mutateAsync, isPending } = useCreateProduct();
   const navigate = useNavigate();
 
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit } = useForm<ProductFormValues>({
     defaultValues: {
       title: "",
       price: 0,
@@ -40,7 +41,7 @@ export default function ProductAddForm() {
     name: "variants",
   });
 
-  const onSubmit = async (values: any) => {
+  const onSubmit = async (values: ProductFormValues) => {
     try {
       console.log("✅ values:", values);
 
@@ -52,14 +53,19 @@ export default function ProductAddForm() {
             return {
               url,
               position: idx,
-              createdAt: new Date(),
-              updatedAt: new Date(),
+            };
+          }
+          // Nếu đã có url thì trả về object, KHÔNG trả về string!
+          if (file.url) {
+            return {
+              url: file.url,
+              position: idx,
             };
           }
           return null;
         })
       );
-
+      const filteredThumbnails = thumbnails.filter((item) => !!item);
       // Chuẩn hoá variants
       const variants = (values.variants || []).map((variant: any) => ({
         size: variant.size,
@@ -71,11 +77,17 @@ export default function ProductAddForm() {
         price: Number(values.price),
         description: values.description,
         product_category_id: values.product_category_id,
-        thumbnails: thumbnails.filter(Boolean),
+        thumbnails: filteredThumbnails, // ✅ Luôn là array object đúng format
         variants,
+        status: "active", // Thêm dòng này
       };
 
-      console.log("✅ Payload gửi đi:", payload);
+      if (filteredThumbnails.length === 0) {
+        message.error("Vui lòng thêm ít nhất 1 ảnh sản phẩm");
+        return;
+      }
+      console.log("Thumbnails:", filteredThumbnails);
+      console.log("Payload:", payload);
       console.log("🧾 Payload cuối:", JSON.stringify(payload, null, 2));
 
       await mutateAsync(payload);
@@ -220,7 +232,7 @@ export default function ProductAddForm() {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" loading={isLoading}>
+            <Button type="primary" htmlType="submit" loading={isPending}>
               Thêm sản phẩm
             </Button>
           </Form.Item>

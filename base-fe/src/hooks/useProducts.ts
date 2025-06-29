@@ -22,6 +22,11 @@ export const useCreateProduct = () => {
       const serverError = error.response?.data;
       console.error("❌ Server response:", serverError);
 
+      // Thêm log chi tiết errors
+      if (serverError?.errors) {
+        console.error("❌ Chi tiết lỗi:", serverError.errors);
+      }
+
       if (Array.isArray(serverError?.errors)) {
         const messageStr = serverError.errors.join("\n");
         message.error(`Lỗi:\n${messageStr}`);
@@ -59,8 +64,10 @@ export const useDeleteProduct = () => {
       message.success(res?.message || "Đã xoá sản phẩm");
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },
-    onError: () => {
+    onError: (error:any) => {
       message.error("Xoá sản phẩm thất bại");
+       console.error("❌ Server response:", error?.response?.data);
+  console.error("❌ Chi tiết lỗi:", error?.response?.data?.errors);
     },
   });
 };

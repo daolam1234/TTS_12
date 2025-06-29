@@ -1,54 +1,49 @@
-export  interface  Product  {
-  id: number;
-  name: string;
-  description: string;
-  price: string;
-  category: string;
-  status: string;
-  stock: number;
-  date: string;
-  image: string;
-  isDeleted: boolean;
-};
-export interface ProductFormValues {
-id:number | null; // Optional for new products
-  name: string;
-  productName: string; 
-  size:string;
-  createdAt: string;
+export interface Product {
+  _id: string;
+  title: string;
   description: string;
   price: number;
-  category: string;
-  status: string;
+  product_category_id: string;
+  status: "active" | "inactive";  // ✅ OK
   stock: number;
-    image: string;
-  
-      isDeleted?: boolean;
- // Optional for file upload
+  createdAt: string;
+  updatedAt: string;
+  thumbnails: {
+    url: string;
+    position: number;
+  }[];
+  deleted: boolean;
+  discountPercentage?: number;
+  discountStartDate?: string | null;
+  discountEndDate?: string | null;
+  variants: {
+    _id: string;
+    size: string;
+    stock: number;
+  }[];
 }
+
 // types/ProductFormValues.ts
 import type { UploadFile } from "antd/es/upload/interface";
 
-export interface VariantAttribute {
-  attribute_id: string;
-  value: string;
-}
-
 export interface Variant {
+  _id?: string; // có thể có khi edit
   size: string;
   stock: number;
-  price: number;
-  price_discount?: number;
-  thumbnails: UploadFile[];
-  attributes: VariantAttribute[];
 }
 
 export interface ProductFormValues {
+  _id?: string;
   title: string;
-  price: number;
   description: string;
+  price: number;
   product_category_id: string;
+  stock: number;
+  status: "active" | "inactive";  // ✅ OK, giống type
   thumbnails: UploadFile[];
+  discountPercentage?: number;
+  discountStartDate?: string | null;
+  discountEndDate?: string | null;
   variants: Variant[];
 }
 
@@ -63,9 +58,8 @@ export interface AddProductPayload {
   product_category_id: string
   thumbnails: { url: string; position: number }[]
   variants: {
-    name: string
-    price: number
+    size: string
     stock: number
-    thumbnails: string[] // URLs
+
   }[]
 }

@@ -12,45 +12,21 @@ export const productService = {
   },
 
   create: async (data: any) => {
-    const formData = new FormData();
+    // Gửi JSON, không dùng FormData nếu không upload file
+    const payload = {
+      ...data,
+      thumbnails: (data.thumbnails || []).map((item: any, i: number) => ({
+        url: item.url,
+        position: item.position ?? i,
+      })),
+      variants: (data.variants || []).map((v: any) => ({
+        size: v.size,
+        stock: Number(v.stock),
+      })),
+    };
 
-    // ✅ Thông tin cơ bản
-    if (data.title) formData.append("title", data.title);
-    if (data.slug) formData.append("slug", data.slug);
-    if (data.price !== undefined) formData.append("price", data.price.toString());
-    if (data.description) formData.append("description", data.description);
-    if (data.product_category_id) formData.append("product_category_id", data.product_category_id);
-    formData.append("discountPercentage", (data.discountPercentage ?? 0).toString());
-    formData.append("position", (data.position ?? 0).toString());
-
-    // ✅ Ảnh thumbnails (gửi url text)
-    (data.thumbnails || []).forEach((url: string, i: number) => {
-      formData.append(`thumbnails[${i}]`, url);
-    });
-
-    // ✅ Variants
-    (data.variants || []).forEach((variant: any, i: number) => {
-      if (variant.size) formData.append(`variants[${i}][size]`, variant.size);
-      formData.append(`variants[${i}][stock]`, String(variant.stock ?? 0));
-      formData.append(`variants[${i}][price]`, String(variant.price ?? 0));
-      formData.append(`variants[${i}][price_discount]`, String(variant.price_discount ?? 0));
-
-      // Ảnh variant
-      (variant.thumbnails || []).forEach((url: string, j: number) => {
-        formData.append(`variants[${i}][images][${j}]`, url);
-      });
-
-      // Attributes nếu có
-      (variant.attributes || []).forEach((attr: any, k: number) => {
-        if (attr.attribute_id)
-          formData.append(`variants[${i}][attributes][${k}][attribute_id]`, attr.attribute_id);
-        if (attr.value)
-          formData.append(`variants[${i}][attributes][${k}][value]`, attr.value);
-      });
-    });
-
-    const res = await instanceAxios.post("/products", formData);
-    return res.data; // { success, data, message }
+    const res = await instanceAxios.post("/products", payload);
+    return res.data;
   },
 
   update: async (id: string, data: any) => {
