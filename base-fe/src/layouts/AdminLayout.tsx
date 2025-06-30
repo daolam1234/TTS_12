@@ -1,9 +1,10 @@
 // src/components/layouts/AdminLayout.tsx
-import { Layout, Drawer, Grid } from "antd";
+import { Layout, Drawer, Grid, Button } from "antd";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "@/components/admin/Dashboard/sidebar";
 import HeaderComponent from "@/components/admin/Dashboard/header";
+import { useLogout } from "@/hooks/useAuth";
 
 const { Content, Sider } = Layout;
 const { useBreakpoint } = Grid;
@@ -13,12 +14,13 @@ export default function AdminLayout() {
   const isMobile = !screens.md;
   const [drawerVisible, setDrawerVisible] = useState(false);
   const toggleDrawer = () => setDrawerVisible(!drawerVisible);
-
+  const logout = useLogout();
   return (
     <Layout style={{ minHeight: "100vh" }}>
       {!isMobile ? (
         <Sider width={220} className="bg-white shadow-md">
           <div className="text-center text-xl font-bold my-4">Admin</div>
+         
           <Sidebar />
         </Sider>
       ) : (

@@ -1,5 +1,3 @@
-// src/pages/admin/banner/BannerAddPage.tsx
-
 import React from "react";
 import { Form, Input, Button, Switch, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
@@ -8,7 +6,7 @@ import { useCreateBanner } from "@/hooks/usebanner";
 
 const BannerAddPage = () => {
   const [form] = Form.useForm();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const createBanner = useCreateBanner();
 
   const onFinish = async (values: any) => {
@@ -17,7 +15,7 @@ const BannerAddPage = () => {
       formData.append("title", values.title);
       formData.append("description", values.description || "");
       formData.append("link", values.link || "");
-      formData.append("isActive", values.isActive ? "true" : "false");
+      formData.append("isActive", values.isActive ? "1" : "0");
 
       const file = values.image?.[0]?.originFileObj;
       if (!file) {
@@ -26,8 +24,7 @@ const BannerAddPage = () => {
       }
       formData.append("image", file);
 
-      // ✅ Log chi tiết FormData
-      console.log("✅ FormData gửi đi:");
+      // Debug FormData gửi đi
       for (const [key, value] of formData.entries()) {
         if (value instanceof File) {
           console.log(`${key}: [File] name=${value.name}, size=${value.size}`);
@@ -36,15 +33,14 @@ const BannerAddPage = () => {
         }
       }
 
-      const response = await createBanner.mutateAsync(formData);
-
-      console.log("✅ Response trả về từ BE:", response);
-
+      await createBanner.mutateAsync(formData);
       message.success("Tạo banner thành công!");
       navigate("/admin/banners");
-    } catch (error) {
+    } catch (error: any) {
       console.error("❌ Lỗi khi tạo banner:", error);
-      message.error("Tạo banner thất bại");
+      message.error(
+        error?.response?.data?.message || "Tạo banner thất bại, vui lòng kiểm tra lại."
+      );
     }
   };
 
@@ -93,7 +89,7 @@ const BannerAddPage = () => {
           <Button
             type="primary"
             htmlType="submit"
-            loading={createBanner.isLoading}
+            loading={createBanner.isPending}
           >
             Thêm Banner
           </Button>

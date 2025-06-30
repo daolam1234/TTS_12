@@ -3,13 +3,23 @@ import instanceAxios from "@/utils/axios";
 
 export const accountService = {
   getAll: async (params?: Record<string, any>) => {
-    const res = await instanceAxios.get("user/getUsers", { params });
+    const res = await instanceAxios.get("/user/getUsers", { params });
     return res.data?.data || [];
   },
+
   softDelete: async (id: string) => {
     const res = await instanceAxios.delete(`/user/${id}`);
- 
     return res.data?.data;
+  },
+
+  lockAccount: async (id: string) => {
+    const res = await instanceAxios.put(`/user/${id}/lock`);
+    return res.data;
+  },
+
+  restoreAccount: async (id: string) => {
+    const res = await instanceAxios.put(`/user/${id}/restore`);
+    return res.data;
   },
 
   

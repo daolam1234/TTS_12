@@ -31,6 +31,10 @@ import OrderListPage from "@/pages/order/OrderListPage";
 import BannerEditPage from "@/pages/banner/BannerEdit";
 import ShippingMethodListPage from "@/pages/ShippingMethod/ShippingMethodListPage";
 import OrderDetailPage from "@/pages/order/OrderDetailPage";
+import { ShippingMethodCreatePage } from "@/pages/ShippingMethod/ShippingMethodCreate";
+import { ShippingMethodEditPage } from "@/pages/ShippingMethod/ShippingMethodEdit";
+import { ProductVariantAddPage } from "@/pages/variant/varant";
+import ProductVariantEditPage from "@/pages/variant/VariantEditPage";
 
 
 
@@ -66,7 +70,20 @@ export const adminRouter = createBrowserRouter([
           { path: "products/add", element: <AddSanPham /> },
           { path: "products/deleted", element: <ProductDeletedList /> },
           { path: "products/edit/:id", element: <EditSanPham /> },
-          { path: "products/details/:id", element: <ProductDetailPage /> },
+          {
+            path: "products/details/:id",
+            element: <ProductDetailPage />,
+          },
+          {
+            path: "products/details/:id/variants/add",
+            element: <ProductVariantAddPage />,
+          },
+          {
+            path: "products/details/:id/variants/:variantIndex/edit",
+            element: <ProductVariantEditPage />,
+          },
+         
+
           { path: "voucher", element: <VouchersPage /> },
           { path: "order", element: <OrderListPage /> },
           { path: "orders/:id", element: <OrderDetailPage /> },
@@ -82,6 +99,8 @@ export const adminRouter = createBrowserRouter([
           { path: "comments", element: <CommentList /> },
           { path: "account", element: <ListAccountPage /> },
           { path: "shipping", element: <ShippingMethodListPage /> },
+          { path: "shipping/add", element: <ShippingMethodCreatePage /> },
+          { path: "shipping/edit/:id", element: <ShippingMethodEditPage /> },
        
         ],
       },

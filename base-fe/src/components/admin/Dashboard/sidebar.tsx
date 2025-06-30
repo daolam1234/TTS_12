@@ -69,9 +69,7 @@ export default function Sidebar() {
         <Link to="/admin/categorys">Quản lý danh mục</Link>
       </Menu.Item>
 
-      <Menu.Item key="size" icon={<SlidersOutlined />}>
-        <Link to="/admin/size">Quản lý biến thể size</Link>
-      </Menu.Item>
+     
 
       <Menu.Item key="Voucher" icon={<TagOutlined />}>
         <Link to="/admin/shipping">Quản lý phương thức vận chuyển</Link>

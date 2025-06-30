@@ -1,4 +1,5 @@
 import { auth } from "@/providers";
+import { authService } from "@/services/auth";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -37,4 +38,15 @@ export const useAuth = ({ resource }: Props) => {
       toast.error(error?.message || "Thao tác thất bại. Vui lòng thử lại!");
     },
   });
+};
+
+
+export const useLogout = () => {
+  const navigate = useNavigate();
+  return () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("user");  // nếu có
+    toast.success("Đăng xuất thành công");
+    navigate("/auth/login");  
+  };
 };

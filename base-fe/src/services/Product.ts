@@ -28,11 +28,24 @@ export const productService = {
     const res = await instanceAxios.post("/products", payload);
     return res.data;
   },
-
   update: async (id: string, data: any) => {
-    const res = await instanceAxios.put(`/products/${id}`, data);
+    const payload = {
+      ...data,
+      thumbnails: (data.thumbnails || []).map((item: any, i: number) => ({
+        url: item.url,
+        position: item.position ?? i,
+      })),
+      variants: (data.variants || []).map((v: any) => ({
+        size: v.size,
+        stock: Number(v.stock),
+      })),
+    };
+
+    const res = await instanceAxios.put(`/products/${id}`, payload);
     return res.data;
   },
+
+
 
   softDelete: async (id: string) => {
     const res = await instanceAxios.delete(`/products/soft-delete/${id}`);

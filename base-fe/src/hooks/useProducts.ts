@@ -41,7 +41,33 @@ export const useCreateProduct = () => {
     },
   });
 };
+export const useUpdateProduct = () => {
+  const queryClient = useQueryClient();
 
+  return useMutation({
+    mutationFn: ({ id, data }: { id: string; data: any }) =>
+      productService.update(id, data),
+    onSuccess: (res) => {
+      message.success(res?.message || "Cập nhật sản phẩm thành công");
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+    },
+    onError: (error: any) => {
+      const serverError = error.response?.data;
+      console.error("❌ Server response:", serverError);
+
+      if (Array.isArray(serverError?.errors)) {
+        message.error(`Lỗi: ${serverError.errors.join("\n")}`);
+      } else if (typeof serverError?.errors === "object") {
+        const messageStr = Object.entries(serverError.errors)
+          .map(([field, errs]) => `- ${field}: ${(Array.isArray(errs) ? errs.join(", ") : errs)}`)
+          .join("\n");
+        message.error(`Lỗi:\n${messageStr}`);
+      } else {
+        message.error(serverError?.message || "Cập nhật sản phẩm thất bại");
+      }
+    },
+  });
+};
 export const useProductDetail = (id: string) => {
   return useQuery({
     queryKey: ["product", id],

@@ -97,17 +97,31 @@ const OrderListPage = () => {
     },
     {
       title: "Điều chỉnh trạng thái",
-      render: (_: any, record: any) => (
-        <Select
-          defaultValue={record.status}
-          size="small"
-          loading={isPending}
-          onChange={(value) => handleUpdateStatus(record._id, value)}
-          options={statusOptions}
-          style={{ width: 180 }}
-          disabled={isPending}
-        />
-      ),
+      render: (_: any, record: any) => {
+        const isDelivered = record.status === "delivered";
+    
+        return (
+          <Select
+            defaultValue={record.status}
+            size="small"
+            loading={isPending}
+            onChange={(value) => handleUpdateStatus(record._id, value)}
+            style={{ width: 180 }}
+            disabled={isPending || isDelivered} // disable luôn nếu đã giao thành công
+          >
+            {statusOptions.map((option) => (
+              <Select.Option
+                key={option.value}
+                value={option.value}
+                // Ví dụ thêm logic: khi đã delivered thì disable "cancelled" (nếu vẫn muốn giữ select)
+                disabled={isDelivered && option.value === "cancelled"}
+              >
+                {option.label}
+              </Select.Option>
+            ))}
+          </Select>
+        );
+      },
     },
     {
       title: "Hành động",

@@ -7,4 +7,10 @@ export const authService = {
     
     return res.data;
   },
+
+  logout: async () => {
+    return instanceAxios.post("/auth/logout");
+  },
+
+
 };
