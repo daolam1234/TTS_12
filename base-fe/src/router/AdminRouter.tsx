@@ -35,6 +35,9 @@ import { ShippingMethodCreatePage } from "@/pages/ShippingMethod/ShippingMethodC
 import { ShippingMethodEditPage } from "@/pages/ShippingMethod/ShippingMethodEdit";
 import { ProductVariantAddPage } from "@/pages/variant/varant";
 import ProductVariantEditPage from "@/pages/variant/VariantEditPage";
+import DiscountListPage from "@/pages/cupon/DiscountListPage";
+import AddDiscountPage from "@/pages/cupon/AddDiscountPage";
+import EditDiscountPage from "@/pages/cupon/EditDiscountPage";
 
 
 
@@ -97,6 +100,10 @@ export const adminRouter = createBrowserRouter([
           { path: "banners/edit/:id", element: <BannerEditPage /> },
         
           { path: "comments", element: <CommentList /> },
+          { path: "coupon", element: <DiscountListPage /> },
+          { path: "coupon/add", element: <AddDiscountPage /> },
+          { path: "coupon/edit/:id", element: <EditDiscountPage /> },
+
           { path: "account", element: <ListAccountPage /> },
           { path: "shipping", element: <ShippingMethodListPage /> },
           { path: "shipping/add", element: <ShippingMethodCreatePage /> },
