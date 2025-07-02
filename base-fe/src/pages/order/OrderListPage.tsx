@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, Button, Tag, Space, Select, Tooltip } from "antd";
+import { Table, Button, Tag, Space, Select, Tooltip, Spin } from "antd";
 import { useOrderList, useUpdateOrderStatus } from "@/hooks/useOrder";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
@@ -99,22 +99,21 @@ const OrderListPage = () => {
       title: "Điều chỉnh trạng thái",
       render: (_: any, record: any) => {
         const isDelivered = record.status === "delivered";
-    
+        const isPendingStatus = record.status === "pending";
+
         return (
           <Select
             defaultValue={record.status}
             size="small"
-            loading={isPending}
-            onChange={(value) => handleUpdateStatus(record._id, value)}
             style={{ width: 180 }}
-            disabled={isPending || isDelivered} // disable luôn nếu đã giao thành công
+            disabled={isDelivered || isPending}
+            onChange={(value) => handleUpdateStatus(record._id, value)}
           >
             {statusOptions.map((option) => (
               <Select.Option
                 key={option.value}
                 value={option.value}
-                // Ví dụ thêm logic: khi đã delivered thì disable "cancelled" (nếu vẫn muốn giữ select)
-                disabled={isDelivered && option.value === "cancelled"}
+                disabled={!isPendingStatus && option.value === "cancelled"}
               >
                 {option.label}
               </Select.Option>
@@ -145,13 +144,15 @@ const OrderListPage = () => {
   return (
     <div>
       <h2 className="text-xl font-semibold mb-4">Quản lý đơn hàng</h2>
-      <Table
-        loading={isLoading}
-        columns={columns}
-        dataSource={orders}
-        rowKey="_id"
-        pagination={{ pageSize: 10 }}
-      />
+      {/* Hiệu ứng loading khi isLoading hoặc đang update status */}
+      <Spin spinning={isLoading || isPending} tip="Đang tải...">
+        <Table
+          columns={columns}
+          dataSource={orders}
+          rowKey="_id"
+          pagination={{ pageSize: 10 }}
+        />
+      </Spin>
     </div>
   );
 };

@@ -24,7 +24,6 @@ export default function Sidebar() {
     if (location.pathname.startsWith("/admin/size")) return "size";
     if (location.pathname.startsWith("/admin/coupon")) return "coupon";
     if (location.pathname.startsWith("/admin/shipping")) return "shipping";
-    if (location.pathname.startsWith("/admin/comments")) return "comments";
     return "home";
   })();
 
@@ -62,9 +61,6 @@ export default function Sidebar() {
         <Link to="/admin/shipping">Phương thức vận chuyển</Link>
       </Menu.Item>
 
-      <Menu.Item key="comments" icon={<CommentOutlined />}>
-        <Link to="/admin/comments">Quản lý bình luận</Link>
-      </Menu.Item>
     </Menu>
   );
 }
